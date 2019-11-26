@@ -1,25 +1,29 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React,{useState} from 'react';
+import { Route, Switch, NavLink, Redirect} from 'react-router'
+import Login from './components/login'
+import UserForm from './components/userForm'
+
 
 function App() {
+  const [token, setToken] = useState(null)
+  const [userId, setUserId] = useState(null)
+
+  const gotToken = (token, userId ) =>{
+    localStorage.token = token
+    localStorage.loggedInUserId = userId
+    setToken(token)
+    setUserId(userId)
+    
+  }
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Switch>
+      <Route exact path="/login"   render={(routerProps)=><Login {...routerProps} gotToken={gotToken} /> }    />
+      <Route path="/signUp"   render={(routerProps)=><UserForm   {...routerProps}  /> }    />
+
+    </Switch>
+  
   );
 }
 
