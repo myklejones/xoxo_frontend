@@ -1,10 +1,10 @@
 import React,{useState} from 'react';
-import { Route, Switch, NavLink, Redirect} from 'react-router'
+import { Route, Switch} from 'react-router'
 import Login from './components/login'
 import UserForm from './components/userForm'
 
 
-function App() {
+function App(props) {
   const [token, setToken] = useState(null)
   const [userId, setUserId] = useState(null)
 
@@ -15,7 +15,7 @@ function App() {
     setUserId(userId)
     
   }
-
+console.log(props)
 
   return (
     <Switch>

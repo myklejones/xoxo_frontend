@@ -1,17 +1,13 @@
 import React,{ useState, useEffect} from 'react';
 import adapter from '../services/adapter'
 import {useSelector, useDispatch} from 'react-redux'
+import * as actionCreator from '../store/actions'
 
 function Login(props) {
-
     const [password, setPassword] = useState("")
     const [username, setUsername] = useState("")
-    const [errors, setErrors] = useState(false)
-
-    const token = useSelector(state => state.token)
+    const aToken = useSelector(state => state.aToken)
     const id = useSelector(state => state.id)
-    const dispatch = useDispatch()
-   
 
     const userInput = (evt) => {
        switch(evt.target.name){
@@ -27,21 +23,15 @@ function Login(props) {
         props.history.push('/signUp')
     }
 
-    const loginSubmit = async (evt) =>{
-        evt.preventDefault()
-       let response =  await adapter.login(username,password)
-       response.errors ? setErrors(true) :  setErrors(false)
-         dispatch({type:"SET_TOKEN", payload: response.token})
-         dispatch({type:"SET_ID", payload: response.user_id})  
-       dispatchUser(response) 
-       //    let currentUserInfo = await adapter.currentUser(token,id)
+    const loginSubmit = (evt) =>{
+        evt.preventDefault()       
+        actionCreator.gotToken(username,password)
     }
+    console.log(loginSubmit)
+
     
-    const dispatchUser = async (response) =>{  
-    let currentUserInfo = await adapter.currentUser(token,id)
-    console.log(currentUserInfo)
-       
-    }
+    console.log(aToken)
+   
         return(
             <>
             <form onSubmit={loginSubmit} >
@@ -63,7 +53,7 @@ function Login(props) {
                  autoComplete="off"
                  />
                 <button type="submit" value="Login">Login</button>
-                    {errors ? <li>Username or password does not match</li>: null}
+                    {/* {errors ? <li>Username or password does not match</li>: null} */}
             
            </form>
            <button onClick={signUpClicked}>Sign up</button>

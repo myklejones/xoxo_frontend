@@ -1,8 +1,10 @@
+import * as actionCreator from './actions'
+
+
+
 const initialState = {
- current_user: {},
- all_users: {},
- token: "",
- id:null
+token: '',
+id: null
 }
 
 function reducer(state = initialState, action){
@@ -26,5 +28,6 @@ function reducer(state = initialState, action){
     
     }
 }
+
 
 export default {reducer}
