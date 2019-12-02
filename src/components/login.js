@@ -6,9 +6,13 @@ import * as actionCreator from '../store/actions'
 function Login(props) {
     const [password, setPassword] = useState("")
     const [username, setUsername] = useState("")
-    const aToken = useSelector(state => state.aToken)
-    const id = useSelector(state => state.id)
-
+    const dispatch = useDispatch()
+    // const aToken = useSelector(state => state.token)
+    // const id = useSelector(state => state.id)
+    // const errors = useSelector(state => state.tError)
+    const {token, id,tLoading,tError,uLoading} = useSelector(state=>state)
+    const user = useSelector(state=>state.user)
+    const userData = useSelector(state=>state.userData)
     const userInput = (evt) => {
        switch(evt.target.name){
             case "username":
@@ -23,16 +27,23 @@ function Login(props) {
         props.history.push('/signUp')
     }
 
-    const loginSubmit = (evt) =>{
+    const loginSubmit =  (evt) =>{
         evt.preventDefault()       
-        actionCreator.gotToken(username,password)
+        dispatch(actionCreator.gotToken( username, password))  
     }
-    console.log(loginSubmit)
 
-    
-    console.log(aToken)
-   
-        return(
+    const getUser = (token,id) =>{
+        props.gotToken(token,id)
+        dispatch(actionCreator.getUser(token, id)) 
+    }
+
+    const pushUser = () =>{
+        props.history.push(`/${user.data.attributes.username}`)
+    }
+
+console.log(uLoading)
+
+    return(
             <>
             <form onSubmit={loginSubmit} >
                <label htmlFor="login_username">Username </label>
@@ -53,7 +64,8 @@ function Login(props) {
                  autoComplete="off"
                  />
                 <button type="submit" value="Login">Login</button>
-                    {/* {errors ? <li>Username or password does not match</li>: null} */}
+                    {tError[0] ? <li>{tError[0]}</li>: null}
+                
             
            </form>
            <button onClick={signUpClicked}>Sign up</button>
