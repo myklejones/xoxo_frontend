@@ -33,10 +33,15 @@ export const userLoading = (data) =>{
     }
 }
 
+export const userLoaded = (data) =>{
+    return{
+        type:"U_LOADED", payload: data
+    }
+}
 
 
 export const gotToken = (username, password) => (dispatch) =>{
-    dispatch(tLoading(true))
+   
     fetch('http://localhost:3000/login',{
         method: 'POST',
         headers:{
@@ -55,7 +60,7 @@ export const gotToken = (username, password) => (dispatch) =>{
         }else{
           dispatch(gotTokenAsync(res.token))
           dispatch(gotId(res.user_id))
-          dispatch(userLoading(true))  
+          dispatch(tLoading(true))
         }
     
     })
@@ -127,8 +132,18 @@ export const gotUserActive = (data) =>{
 }
 
 
+export const gotUserId = (data) =>{
+    return{
+        type:"SET_USER_ID" , payload: data
+    }
+}
 
 
+
+export const logout = (bool) => dispatch =>{
+
+    dispatch(userLoading(bool)) 
+}
 
 
 export const getUser = (token, id) => dispatch =>{
@@ -138,11 +153,12 @@ export const getUser = (token, id) => dispatch =>{
             Accepts: 'application/json',
             'Content-type' : 'application/json',
             "Authorization": token
-        }
+        } 
     }).then(res => res.json())
     .then(res =>{
-        dispatch(userLoading(false))
-        dispatch(gotUser(res.user))
+        console.log(res)
+        dispatch(tLoading(false))
+        dispatch(gotUser(res.all_users))
         dispatch(gotAllUser(res.all_users))
         dispatch(gotUserName(res.user.data.attributes.name))
         dispatch(gotUserUsername(res.user.data.attributes.username))
@@ -154,8 +170,109 @@ export const getUser = (token, id) => dispatch =>{
         dispatch(gotUserAboutMe(res.user.data.attributes.about_me))
         dispatch(gotUserSex(res.user.data.attributes.sex))
         dispatch(gotUserActive(res.user.data.attributes.active))
-       
+        dispatch(gotUserId(res.user.data.attributes.id))
+        
+        dispatch(userLoading(true))  
+        
 
 
     })
 } 
+
+export const updatingUser = (bool) =>{
+
+    return{
+        type:"UPDATING_USER" , payload: bool
+    }
+}
+
+
+export const errorUpdatingUser = (error) =>{
+
+    return{
+        type:"ERROR_UPDATING_USER" , payload: error
+    }
+}
+
+
+export const editUserProfile = (userinfo,token,id) => dispatch => {
+
+dispatch(updatingUser(true))
+    fetch(`http://localhost:3000/users/${id}`,{
+        headers:{
+            Accepts: 'application/json',
+            'Content-type' : 'application/json',
+            "Authorization": token
+        },
+        method: "PUT",
+        body: JSON.stringify(userinfo)
+    })
+    .then(res => res.json())
+    .then(data =>{
+        console.log(data)
+        if( data.errors ){
+         dispatch(errorUpdatingUser(data))   
+        }else{
+            dispatch(updatingUser(false))
+            dispatch(gotUserName(data.user.name))
+            dispatch(gotUserUsername(data.user.username))
+            dispatch(gotUserAge(data.user.age))
+            dispatch(gotUserEmail(data.user.email))
+            dispatch(gotUserPhoto(data.user.photo))
+            dispatch(gotUserDob(data.user.dob))
+            dispatch(gotUserCityState(data.user.city_state))
+            dispatch(gotUserAboutMe(data.user.about_me))
+            dispatch(gotUserSex(data.user.sex)) 
+
+        }
+    })
+
+}
+
+export const newUserError = (data) =>{
+
+    return{
+        type:"NEW_USER_ERROR" , payload: data
+    }
+}
+
+
+
+export const newUserCreated = (data) =>{
+
+    return{
+        type:"NEW_USER_CREATED" , payload: data
+    }
+}
+
+
+
+
+
+
+export const newUser = (userinfo) => dispatch => {
+    dispatch(newUserCreated(false))
+        fetch(`http://localhost:3000/users`,{
+            headers:{
+                Accepts: 'application/json',
+                'Content-type' : 'application/json',
+                
+            },
+            method: "POST",
+            body: JSON.stringify(userinfo)
+        })
+        .then(res => res.json())
+        .then(data =>{
+            console.log(data)
+            if(data.errors){
+                dispatch(newUserError(data))
+            }else{
+               
+                dispatch(newUserCreated(true))
+
+            }
+           
+        })
+    
+    }
+    

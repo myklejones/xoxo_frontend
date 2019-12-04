@@ -1,8 +1,13 @@
 import React,{ useState, useEffect, Fragment} from 'react';
+import {useSelector, useDispatch} from 'react-redux'
+import * as actionCreator from '../store/actions'
 
 function UserForm(props){
 
-    
+    const dispatch = useDispatch()
+    const created = useSelector(state=> state.newUserCreated)
+    const newUserError = useSelector(state => state.newUserError)
+
 
         const [password, setPassword] = useState("")
         const [username, setUsername] = useState("")
@@ -12,7 +17,8 @@ function UserForm(props){
         const [cityState, setCityState] = useState("")
         const [aboutMe, setAboutMe] = useState("")
         const [sex, setSex] = useState("")
-    
+        const [email, setEmail] = useState("")
+        const [photo, setPhoto] = useState("")
 const formInput= (evt)=>{
     switch(evt.target.name){
         case "username":
@@ -39,6 +45,12 @@ const formInput= (evt)=>{
         case "sex":
             setSex(evt.target.value)
             break;
+        case "email":
+            setEmail(evt.target.value)
+            break;
+        case "photo" :
+            setPhoto(evt.target.value)
+
    }
 
 }
@@ -48,27 +60,66 @@ const loginClicked = () => {
 }
 
 
+const formSubmit = (e)=>{
+e.preventDefault() 
+let data = {
+    username: username,
+    name: name,
+    password: password,
+    age: age,
+    city_state: cityState,
+    about_me: aboutMe,
+    sex:sex,
+    email: email,
+    photo: photo,
+    dob: dob,
+    active: false
+   
+}
+dispatch( actionCreator.newUser(data))
 
+}
+
+console.log(photo,email,dob, password)
 
 return(
     <>
-    <form >
-    <label htmlFor="username">Username </label>
+    {/* {created ? loginClicked(): null} */}
+    {newUserError.errors ? newUserError.errors.map(error=> <li>{error}</li>) : null}
+    <form onSubmit={formSubmit}>
+
+        <h1>Create New User</h1>
+        <ol><label htmlFor="username">Username </label>
      <input
      id="username"
       type="text"
       onChange = {formInput}
       name="username"
       value={username} 
-      />
-       <label htmlFor="password">password </label>
+      /></ol>
+
+    <ol> <label htmlFor="password">password </label>
      <input
      id="password"
       type="password"
       onChange = {formInput}
       name="password"
       value={password} 
-      />
+      /></ol>
+
+<ol>
+      <label htmlFor="email">email </label>
+     <input
+     id="email"
+      type="text"
+      onChange = {formInput}
+      name="email"
+      value={email} 
+      autoComplete="off"
+      /></ol>
+
+    
+    <ol>
       <label htmlFor="name">Name </label>
      <input
      id="name"
@@ -77,7 +128,20 @@ return(
       name="name"
       value={name} 
       autoComplete="off"
-      />
+      /></ol>
+
+<ol>
+      <label htmlFor="photo">Photo </label>
+     <input
+     id="photo"
+      type="text"
+      onChange = {formInput}
+      name="photo"
+      value={photo} 
+      autoComplete="off"
+      /></ol>
+
+    <ol>
       <label htmlFor="age">Age </label>
      <input
      id="age"
@@ -86,8 +150,9 @@ return(
       name="age"
       value={age} 
       autoComplete="off"
-      />
-     <label htmlFor="dob">Birthdate </label>
+      /></ol>
+
+    <ol><label htmlFor="dob">Birthdate </label>
      <input
      id="dob"
       type="text"
@@ -95,17 +160,20 @@ return(
       name="dob"
       value={dob} 
       autoComplete="off"
-      />
-       <label htmlFor="city_state">City & State </label>
+      /></ol>
+      
+     
+      <ol><label htmlFor="city_state">City & State </label>
      <input
      id="city_state"
       type="text"
       onChange = {formInput}
-      name="city_state"
+      name="cityState"
       value={cityState} 
       autoComplete="off"
-      />
-       <label htmlFor="aboutMe">About Me </label>
+      /></ol>
+
+       <ol><label htmlFor="aboutMe">About Me </label>
      <input
      id="aboutMe"
       type="text"
@@ -113,10 +181,9 @@ return(
       name="aboutMe"
       value={aboutMe} 
       autoComplete="off"
-      />
-
-{/* <label htmlFor="sex">Sex </label> */}
-     <input
+      /></ol>
+       
+       <ol> <input
      id="sex"
       type="radio"
       onChange = {formInput}
@@ -137,14 +204,17 @@ return(
      name="sex"
      value="other" 
    />other
+</ol>
+
+{/* <label htmlFor="sex">Sex </label> */}
+    
 
 
-
-     <button type="submit" value="Login">Create User</button>
+     <button type="submit" value="submit">Create User</button>
  
 </form>
-
 <button onClick={loginClicked}>Login</button>
+
 </>
 )
 }

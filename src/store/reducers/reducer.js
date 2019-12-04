@@ -1,6 +1,3 @@
-import * as actionCreator from '../actions'
-
-
 
 const initialState = {
 token: null,
@@ -18,12 +15,17 @@ user:{
     city_state:"",
     about_me:"",
     sex:"",
-    active: false
+    active: false,
+    id:null
 
 
 },
 allUsers:{}, 
-userData:{}
+userData:[],
+updatingUser: false,
+errorUpdatingUser: {},
+newUserError:{},
+newUserCreated: false
 }
 
 function reducer(state = initialState, action){
@@ -63,44 +65,65 @@ function reducer(state = initialState, action){
             }
         case "SET_USER_USERNAME":
                 return{
-                    ...state, userData:{...state.userData, username:action.payload}
+                    ...state, user:{...state.user, username:action.payload}
                 }
         case "SET_USER_AGE":
                 return{
-                     ...state, userData:{...state.userData, age:action.payload}
+                     ...state, user:{...state.user, age:action.payload}
                 }
         case "SET_USER_NAME":
                 return{
-                     ...state, userData:{...state.userData, name:action.payload}
+                     ...state, user:{...state.user, name:action.payload}
                 } 
         case "SET_USER_EMAIL":
                 return{
-                     ...state, userData:{...state.userData, email:action.payload}
+                     ...state, user:{...state.user, email:action.payload}
                 } 
         case "SET_USER_PHOTO":
                 return{
-                     ...state, userData:{...state.userData, photo:action.payload}
+                     ...state, user:{...state.user, photo:action.payload}
                 } 
         case "SET_USER_DOB":
                 return{
-                    ...state, userData:{...state.userData, dob:action.payload}
+                    ...state, user:{...state.user, dob:action.payload}
                 } 
         case "SET_USER_CITY_STATE":
                 return{
-                     ...state, userData:{...state.userData, city_state:action.payload}
+                     ...state, user:{...state.user, city_state:action.payload}
                 } 
         case "SET_USER_ABOUT_ME":
                 return{
-                     ...state, userData:{...state.userData, about_me:action.payload}
+                     ...state, user:{...state.user, about_me:action.payload}
                 }   
         case "SET_USER_SEX":
                 return{
-                     ...state, userData:{...state.userData, sex:action.payload}
+                     ...state, user:{...state.user, sex:action.payload}
                 }
         case "SET_USER_ACTIVE":
                 return{
-                     ...state, userData:{...state.userData, active:action.payload}
+                     ...state, user:{...state.user, active:action.payload}
                  }
+        case "SET_USER_ID":
+            return{
+                ...state, user:{...state.user, id:action.payload}
+            }
+        case "UPDATING_USER":
+            return{
+                    ...state, updatingUser: action.payload, errorUpdatingUser:false
+                }
+        case "ERROR_UPDATING_USER":
+                return{
+                    ...state, errorUpdatingUser: action.payload
+                }
+        case "NEW_USER_ERROR":
+            return{
+                ...state, newUserError: action.payload
+            }
+        case "NEW_USER_CREATED":
+            return{
+                ...state, newUserCreated: action.payload
+            }
+
         default:
             return{
                 ...state

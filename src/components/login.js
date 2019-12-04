@@ -1,5 +1,4 @@
 import React,{ useState, useEffect} from 'react';
-import adapter from '../services/adapter'
 import {useSelector, useDispatch} from 'react-redux'
 import * as actionCreator from '../store/actions'
 
@@ -7,9 +6,7 @@ function Login(props) {
     const [password, setPassword] = useState("")
     const [username, setUsername] = useState("")
     const dispatch = useDispatch()
-    // const aToken = useSelector(state => state.token)
-    // const id = useSelector(state => state.id)
-    // const errors = useSelector(state => state.tError)
+
     const {token, id,tLoading,tError,uLoading} = useSelector(state=>state)
     const user = useSelector(state=>state.user)
     const userData = useSelector(state=>state.userData)
@@ -30,6 +27,9 @@ function Login(props) {
     const loginSubmit =  (evt) =>{
         evt.preventDefault()       
         dispatch(actionCreator.gotToken( username, password))  
+       
+        // dispatch(actionCreator.getUser(token, id)) 
+        
     }
 
     const getUser = (token,id) =>{
@@ -38,10 +38,24 @@ function Login(props) {
     }
 
     const pushUser = () =>{
-        props.history.push(`/${user.data.attributes.username}`)
+        props.history.push(`/${user.username}`)
     }
 
-console.log(uLoading)
+    
+    console.log( username,password, token, id)
+    if(tLoading){
+        props.gotToken(token,id) 
+        getUser(token, id)
+    } 
+    if(uLoading){pushUser()}
+    useEffect(()=>{
+    if(localStorage.loggedInUserId && !uLoading){
+        dispatch(actionCreator.getUser(localStorage.token, localStorage.loggedInUserId)) 
+    }
+
+
+},[])
+
 
     return(
             <>
