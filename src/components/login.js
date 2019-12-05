@@ -38,7 +38,7 @@ function Login(props) {
     }
 
     const pushUser = () =>{
-        props.history.push(`/${user.username}`)
+        props.history.push(`user`)
     }
 
     
@@ -59,33 +59,45 @@ function Login(props) {
 
     return(
             <>
-            <form onSubmit={loginSubmit} >
-               <label htmlFor="login_username">Username </label>
-                <input
-                id="login_username"
-                 type="text"
-                 onChange = {userInput}
-                 name="username"
-                 value={username} 
-                 />
-                 <label htmlFor="login_user_password">Password </label>
-                <input
-                id="login_user_password"
-                 type="password"
-                 onChange = {userInput}
-                 name="password"
-                 value={password} 
-                 autoComplete="off"
-                 />
-                <button type="submit" value="Login">Login</button>
-                    {tError[0] ? <li>{tError[0]}</li>: null}
-                
-            
-           </form>
-           <button onClick={signUpClicked}>Sign up</button>
+           
+           <div class="ui inverted segment">
+  <form onSubmit={loginSubmit} class="ui inverted form">
+    <div class="equal width fields">
+      <div class="field">
+        <label>Username</label>
+        <div class="ui fluid input"><input
+         type="text" 
+         placeholder="Username" 
+         value={username} 
+        onChange = {userInput}
+        name="username"
+        id="login_username"
+         /></div>
+      </div>
+      <div class="field">
+        <label>Password</label>
+        <div class="ui fluid input"><input 
+        laceholder="Password" 
+        id="login_user_password"
+        type="password"
+        onChange = {userInput}
+        name="password"
+        value={password} 
+        autoComplete="off"
+
+        
+        /></div>
+      </div>
+    </div>
+    <button type="submit" class="ui button">Submit</button>
+  </form>
+</div>
+           <button class="ui secondary button" onClick={signUpClicked}>Sign up</button>
+   {tError.errors ? console.log(tError):null}
            </>
         )
     
 }
 
 export default Login
+

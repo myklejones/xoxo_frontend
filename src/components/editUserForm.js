@@ -139,7 +139,7 @@ return(
       /></ol> 
 
     <ol><label htmlFor="aboutMe">About Me </label>
-     <input
+     <textarea
      id="aboutMe"
       type="text"
       onChange = {formInput}

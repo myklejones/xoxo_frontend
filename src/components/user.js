@@ -13,13 +13,20 @@ function User(props){
 
     return(
         <>
-        <h1>Welcome {user.username}!</h1>
-        <img src={user.photo} rel="user Photo" />
-        <h2>{user.city_state}</h2>
-        {props.showAll ?<><h3>Birthdate :</h3><ol>{user.dob}</ol><h3>About me:</h3><ol>{user.about_me}</ol><h3>Email: </h3><ol>{user.email}</ol><h4>Sex</h4><ol>{user.sex}</ol></> :null}
+        <div onClick={props.viewSelf} class="ui card">
+  <div class="image"><img src={user.photo} /></div>
+  <div class="content">
+    <div class="header">{user.username}</div>
+    <div class="meta"><span class="date">{user.city_state}</span></div>
+        {props.showAll ?<><div class="description">Birthday: {user.dob}</div><div class="description">Aboutme: {user.about_me}</div><div class="description">Email: {user.email}</div><div class="description">Sex: {user.sex}</div></> :null}
+  </div>
+  
+</div>
         
         </>
     )
 } 
 
 export default User
+
+

@@ -3,7 +3,8 @@ import {useSelector, useDispatch} from 'react-redux'
 import User from './user'
 import EditUserForm from './editUserForm'
 import * as actionCreator from '../store/actions'
-import AllUsers from './allUsers'
+import AllUsersContainer from './allUsersContainer.js'
+ 
 
 function UserContainer(props){
     const user = useSelector(state => state.user)
@@ -11,13 +12,12 @@ function UserContainer(props){
     const userData= useSelector(state => state.userData)
     const uLoaded = useSelector(state => state.uLoading)
     const [profile, setProfile] = useState(false)
-
+    const allUsers = useSelector(state => state.userData)
     const dispatch = useDispatch()
     const [edit, setEdit] = useState(false)
-    const [showAll, setShowAll] = useState(false)
+    const [viewUsers, setViewUsers] = useState(false)
 
-    console.log(userData, user)
-    console.log(props)
+   
 
     useEffect(()=>{
         if(localStorage.loggedInUserId && localStorage.token && !user.id){
@@ -37,25 +37,33 @@ function UserContainer(props){
   const editClicked = ()=>{
     setEdit(!edit)
   }
-  const allUserShow = ()=>{setShowAll(!showAll)}
-
-  const viewProfileClicked = () =>{
+const viewProfileClicked = () =>{
      setProfile(!profile)
   }
-const profileClicked=()=>{
-    console.log("hello")
-    props.history.push(`/${user.username}/users`)
+const viewUsersClicked=()=>{
+    setViewUsers(!viewUsers)
 }  
-    return(
-        <>
-        <button onClick={logoutClicked}>Log Out</button>
-        <button onClick={viewProfileClicked}>View Profile</button>
-        <User   props={props} showAll={profile} />
-
-        {edit ? <><EditUserForm from="Edit" self={user} /><button  onClick={editClicked}>Cancel</button></> : <button  onClick={editClicked}>Edit Profile</button>}
-        {showAll ? <button onClick={allUserShow} >Hide Users</button>:null}
-        {showAll ? userData.filter(aUsers => aUsers.id !== user.id).map(users =><> <AllUsers profileClicked={profileClicked} users={users} /></>) : <button onClick={allUserShow}> ❤️</button>}
+console.log(allUsers)
+return(
+    
+    <> 
+    {/* <button onClick={logoutClicked}>Log Out</button> */}
+     <button onClick={logoutClicked} class="ui basic blue button">
+        <i aria-hidden="true" class="logout icon"></i>
+            Logout
+        </button>
+            {/* {!viewUsers ? <button onClick={viewProfileClicked} class="ui basic blue button">
+<i aria-hidden="true" class="profile icon"></i>
+View Profile
+</button>: null} */}
+            {!viewUsers ?<><User viewSelf={viewProfileClicked} props={props} showAll={profile} />{edit ? <><EditUserForm from="Edit" self={user} /><button  onClick={editClicked}>Cancel</button></> : <button  class="ui basic blue button" onClick={editClicked}>Edit Profile</button>}</> : null} 
+            {!viewUsers ? <button class="ui basic blue button">Messages</button> :null}
+            {!viewUsers ? <button class="ui basic blue button" onClick={viewUsersClicked}>      <i aria-hidden="true" class="users icon"></i> Users</button> : <button class="ui basic blue button" onClick={viewUsersClicked}><i aria-hidden="true" class="profile icon"></i>Back to Profile</button>}
+            {!viewUsers ? null : <AllUsersContainer  users={allUsers} />}
+           
         
+       
+
         </>
     )
 } 
