@@ -8,12 +8,13 @@ function User(props){
     const [edit, setEdit] = useState(false)
     
     const user = useSelector(state => state.user)
-    console.log(user, props)
+    const error = useSelector(state => state.errorUpdatingUser)
+    console.log(error)
    
 
     return(
         <>
-        <div onClick={props.viewSelf} class="ui card">
+        <div onClick={props.viewSelf} class="ui billboard card">
   <div class="image"><img src={user.photo} /></div>
   <div class="content">
     <div class="header">{user.username}</div>

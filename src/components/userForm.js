@@ -80,11 +80,11 @@ dispatch( actionCreator.newUser(data))
 
 }
 
-console.log(photo,email,dob, password)
+console.log(created)
 
 return(
     <>
-    {/* {created ? loginClicked(): null} */}
+    {created ? loginClicked(): null}
     {newUserError.errors ? newUserError.errors.map(error=> <li>{error}</li>) : null}
     <form onSubmit={formSubmit}>
 

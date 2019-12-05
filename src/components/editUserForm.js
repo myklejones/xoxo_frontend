@@ -57,7 +57,9 @@ let userInfo = {
     dob: dob,
     city_state: cityState,
     about_me: aboutMe,
-    sex: sex
+    sex: sex,
+    id:localStorage.loggedInUserId,
+    password: localStorage.pass
 }
 
 

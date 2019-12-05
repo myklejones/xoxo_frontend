@@ -56,11 +56,11 @@ return(
 <i aria-hidden="true" class="profile icon"></i>
 View Profile
 </button>: null} */}
-            {!viewUsers ?<><User viewSelf={viewProfileClicked} props={props} showAll={profile} />{edit ? <><EditUserForm from="Edit" self={user} /><button  onClick={editClicked}>Cancel</button></> : <button  class="ui basic blue button" onClick={editClicked}>Edit Profile</button>}</> : null} 
             {!viewUsers ? <button class="ui basic blue button">Messages</button> :null}
             {!viewUsers ? <button class="ui basic blue button" onClick={viewUsersClicked}>      <i aria-hidden="true" class="users icon"></i> Users</button> : <button class="ui basic blue button" onClick={viewUsersClicked}><i aria-hidden="true" class="profile icon"></i>Back to Profile</button>}
             {!viewUsers ? null : <AllUsersContainer  users={allUsers} />}
            
+            {!viewUsers ?<><User viewSelf={viewProfileClicked} props={props} showAll={profile} />{edit ? <><EditUserForm from="Edit" self={user} /><button  onClick={editClicked}>Cancel</button></> : <button  class="ui basic blue button" onClick={editClicked}>Edit Profile</button>}</> : null} 
         
        
 

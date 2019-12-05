@@ -25,7 +25,10 @@ userData:[],
 updatingUser: false,
 errorUpdatingUser: {},
 newUserError:{},
-newUserCreated: false
+newUserCreated: false,
+sendMessageLoading: false,
+sendMessageLoaded: {},
+sendMessageError: {}
 }
 
 function reducer(state = initialState, action){
@@ -123,6 +126,18 @@ function reducer(state = initialState, action){
             return{
                 ...state, newUserCreated: action.payload
             }
+        case "SEND_MESSAGE_LOADING":
+                return{
+                        ...state, sendMessageLoading: action.payload
+                    }
+        case "SEND_MESSAGE_LOADED":
+                return{
+                    ...state, sendMessageLoaded: action.payload
+                }
+        case "SEND_MESSAGE_ERROR":
+                return{
+                    ...state, sendMessageError: action.payload
+                }
 
         default:
             return{

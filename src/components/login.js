@@ -26,8 +26,8 @@ function Login(props) {
 
     const loginSubmit =  (evt) =>{
         evt.preventDefault()       
+        localStorage.pass = password
         dispatch(actionCreator.gotToken( username, password))  
-       
         // dispatch(actionCreator.getUser(token, id)) 
         
     }

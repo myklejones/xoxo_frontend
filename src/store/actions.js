@@ -131,20 +131,16 @@ export const gotUserActive = (data) =>{
     }
 }
 
-
 export const gotUserId = (data) =>{
     return{
         type:"SET_USER_ID" , payload: data
     }
 }
 
-
-
 export const logout = (bool) => dispatch =>{
 
     dispatch(userLoading(bool)) 
 }
-
 
 export const getUser = (token, id) => dispatch =>{
     
@@ -196,7 +192,7 @@ export const errorUpdatingUser = (error) =>{
 
 
 export const editUserProfile = (userinfo,token,id) => dispatch => {
-
+console.log(userinfo)
 dispatch(updatingUser(true))
     fetch(`http://localhost:3000/users/${id}`,{
         headers:{
@@ -211,6 +207,7 @@ dispatch(updatingUser(true))
     .then(data =>{
         console.log(data)
         if( data.errors ){
+            console.log(data)
          dispatch(errorUpdatingUser(data))   
         }else{
             dispatch(updatingUser(false))
@@ -274,5 +271,48 @@ export const newUser = (userinfo) => dispatch => {
            
         })
     
+    }
+
+
+export const sendMessageLoading = (bool) =>{
+
+    return{
+        type:"SEND_MESSAGE_LOADING" , payload: bool
+    }
+}
+
+export const sendMessageLoaded = (data) =>{
+
+    return{
+        type:"SEND_MESSAGE_LOADED" , payload: data
+    }
+}
+export const sendMessageError = (data) =>{
+
+    return{
+        type:"SEND_MESSAGE_ERROR" , payload: data
+    }
+}
+
+    export const sendMessage = (message, token,sender_id, reciever_id)=>dispatch=>{
+        console.log(message, token,sender_id, reciever_id)
+        dispatch(sendMessageLoading(true))
+        fetch(`http://localhost:3000/conversations`,{
+            headers:{
+                Accepts: 'application/json',
+                'Content-type' : 'application/json',
+                "Authorization": token
+            },
+            method: "POST",
+            body: JSON.stringify({
+                body:message,
+                sender_id: sender_id,
+                recipient_id: reciever_id,
+                user_id: sender_id
+            })
+        }).then(res => res.json())
+        .then(res =>{
+            console.log(res)
+        })
     }
     
