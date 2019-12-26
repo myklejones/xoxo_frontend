@@ -83,10 +83,12 @@ dispatch( actionCreator.newUser(data))
 console.log(created)
 
 return(
+    
     <>
+
     {created ? loginClicked(): null}
     {newUserError.errors ? newUserError.errors.map(error=> <li>{error}</li>) : null}
-    <form onSubmit={formSubmit}>
+    <form  class="ui form" onSubmit={formSubmit}>
 
         <h1>Create New User</h1>
         <ol><label htmlFor="username">Username </label>
@@ -183,28 +185,40 @@ return(
       autoComplete="off"
       /></ol>
        
-       <ol> <input
-     id="sex"
+       <ol> 
+       <label for="male" >Male  </label> 
+           <input
+     id="male"
       type="radio"
       onChange = {formInput}
       name="sex"
       value="male" 
-    />male
+    />
+    </ol>
+       
+       <ol> 
+    <label for="female" >Female  </label> 
     <input
-     id="sex"
+     id="female"
       type="radio"
       onChange = {formInput}
       name="sex"
       value="felmale" 
-    /> female
+    />
+    </ol>
+       
+       <ol> 
+    <label for="other" >Other </label> 
+
     <input
-    id="sex"
+    id="other"
      type="radio"
      onChange = {formInput}
      name="sex"
      value="other" 
-   />other
+   />
 </ol>
+
 
 {/* <label htmlFor="sex">Sex </label> */}
     
@@ -213,6 +227,7 @@ return(
      <button type="submit" value="submit">Create User</button>
  
 </form>
+
 <button onClick={loginClicked}>Login</button>
 
 </>

@@ -42,7 +42,6 @@ function Login(props) {
     }
 
     
-    console.log( username,password, token, id)
     if(tLoading){
         props.gotToken(token,id) 
         getUser(token, id)
