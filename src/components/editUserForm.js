@@ -75,37 +75,40 @@ return(
  
     <>
 {errorUpdate.errors ? errorUpdate.errors.map(e => <li>{e}</li>) :null}
-    <form class="ui form" onSubmit={editFormSubmit} >
-        <ol>
-            <label htmlFor="username">Username </label>
-     <input
-     id="username"
-      type="text"
-      onChange = {formInput}
-      name="username"
-      value={username} 
-      placeholder={user.username}
+    <form class="ui tiny form" onSubmit={editFormSubmit} >
+      <div class="fields">
+       <div class="eight wide field">
+
+          <label htmlFor="username">Username </label>
+           <input
+             id="username"
+             type="text"
+             onChange = {formInput}
+              name="username"
+            value={username} 
+               placeholder={user.username}
+             />
+        </div>
+    </div>
+   <div class="fields">
+     <div class="eight wide field">
+        <label htmlFor="name">Name </label>
+          <input
+            id="name"
+            type="text"
+            onChange = {formInput}
+            name="name"
+            value={name} 
+            autoComplete="off"
+            placeholder={user.name}
       />
-        </ol>
-       <ol><label htmlFor="name">Name </label>
-     <input
-     id="name"
-      type="text"
-      onChange = {formInput}
-      name="name"
-      value={name} 
-      autoComplete="off"
-      placeholder={user.name}
-      /></ol>
-       {/* <label htmlFor="password">password </label>
-     <input
-     id="password"
-      type="password"
-      onChange = {formInput}
-      name="password"
-      value={password} 
-      /> */}
-      <ol><label htmlFor="age">Age </label>
+        
+      </div>
+    </div>
+
+    <div class="fields">
+  <div class="eight wide field">
+<label htmlFor="age">Age </label>
      <input
      id="age"
       type="number"
@@ -114,9 +117,17 @@ return(
       value={age} 
       autoComplete="off"
       placeholder={user.age}
-      /></ol>
+      />
+        
+      </div>
 
-      <ol><label htmlFor="dob">Birthdate </label>
+      </div>
+    
+
+      <div class="fields">
+  <div class="eight wide field">
+
+        <label htmlFor="dob">Birthdate </label>
      <input
      id="dob"
       type="text"
@@ -125,11 +136,16 @@ return(
       value={dob} 
       autoComplete="off"
       placeholder={user.dob}
-      /></ol>
+      />
+      </div>
 
+      </div>
+    
 
+      <div class="fields">
+  <div class="eight wide field">
 
-     <ol><label htmlFor="city_state">City & State </label>
+       <label htmlFor="city_state">City & State </label>
      <input
      id="city_state"
       type="text"
@@ -138,9 +154,15 @@ return(
       value={cityState} 
       autoComplete="off"
       placeholder={user.city_state}
-      /></ol> 
+      />  
+      </div>
 
-    <ol><label htmlFor="aboutMe">About Me </label>
+      </div>
+    
+
+      <div class="fields">
+  <div class="eight wide field">
+ <ol><label htmlFor="aboutMe">About Me </label>
      <textarea
      id="aboutMe"
       type="text"
@@ -173,6 +195,13 @@ return(
      value="other"
      
    />other</ol>
+        
+      </div>
+
+      </div>
+   
+
+   
 
 
      <button class="ui basic button " type="submit" value="Submit">Submit</button>
