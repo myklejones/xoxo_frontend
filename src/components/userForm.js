@@ -55,6 +55,7 @@ const formInput= (evt)=>{
 
 }
 
+
 const loginClicked = () => {
     props.history.push('/login')
 }
@@ -83,9 +84,9 @@ dispatch( actionCreator.newUser(data))
 console.log(created)
 
 return(
-    
     <>
-
+    {created ? loginClicked(): null}
+<button class="ui basic button blue" onClick={loginClicked}>Login</button>
     {created ? loginClicked(): null}
     {newUserError.errors ? newUserError.errors.map(error=> <li>{error}</li>) : null}
     <form  class="ui form" onSubmit={formSubmit}>
@@ -224,11 +225,11 @@ return(
     
 
 
-     <button type="submit" value="submit">Create User</button>
+     <button class="ui basic button purple" type="submit" value="submit">Create User</button>
  
 </form>
 
-<button onClick={loginClicked}>Login</button>
+
 
 </>
 )

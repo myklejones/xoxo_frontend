@@ -6,6 +6,7 @@ function Login(props) {
     const [password, setPassword] = useState("")
     const [username, setUsername] = useState("")
     const dispatch = useDispatch()
+    const created = useSelector(state=> state.newUserCreated)
 
     const {token, id,tLoading,tError,uLoading} = useSelector(state=>state)
     const user = useSelector(state=>state.user)
@@ -56,11 +57,11 @@ function Login(props) {
 },[])
 
 
+
     return(
             <>
-           
-           <div class="ui inverted segment">
-  <form onSubmit={loginSubmit} class="ui inverted form">
+           <div class="ui inverted segment blue">
+  <form onSubmit={loginSubmit} class="ui inverted form ">
     <div class="equal width fields">
       <div class="field">
         <label>Username</label>
@@ -88,10 +89,10 @@ function Login(props) {
         /></div>
       </div>
     </div>
-    <button type="submit" class="ui button">Submit</button>
+    <button type="submit" class="ui basic button ">Login</button>
   </form>
 </div>
-           <button class="ui secondary button" onClick={signUpClicked}>Sign up</button>
+           <button class="ui basic button blue" onClick={signUpClicked}>Sign up</button>
    {tError.errors ? console.log(tError):null}
            </>
         )

@@ -58,8 +58,8 @@ let userInfo = {
     city_state: cityState,
     about_me: aboutMe,
     sex: sex,
-    id:localStorage.loggedInUserId,
-    password: localStorage.pass
+    id:localStorage.loggedInUserId
+   
 }
 
 
@@ -75,7 +75,7 @@ return(
  
     <>
 {errorUpdate.errors ? errorUpdate.errors.map(e => <li>{e}</li>) :null}
-    <form  onSubmit={editFormSubmit} >
+    <form class="ui form" onSubmit={editFormSubmit} >
         <ol>
             <label htmlFor="username">Username </label>
      <input
@@ -175,7 +175,7 @@ return(
    />other</ol>
 
 
-     <button type="submit" value="Submit">Submit</button>
+     <button class="ui basic button " type="submit" value="Submit">Submit</button>
  
 </form>
 

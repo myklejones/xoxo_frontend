@@ -245,10 +245,8 @@ export const newUserCreated = (data) =>{
 
 
 
-
-
 export const newUser = (userinfo) => dispatch => {
-    dispatch(newUserCreated(false))
+   
         fetch(`http://localhost:3000/users`,{
             headers:{
                 Accepts: 'application/json',
