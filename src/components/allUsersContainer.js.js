@@ -11,7 +11,7 @@ console.log(props)
 
     useEffect(()=>{
         },[])
-        console.log(localStorage.loggedInUserId)
+       
 return(
     <>
  {props.users.filter(us => us.id !== parseInt(localStorage.loggedInUserId)).map(user=><AUser aUser={user} />)}

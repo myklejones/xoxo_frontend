@@ -26,11 +26,11 @@ function Login(props) {
     }
 
     const loginSubmit =  (evt) =>{
-        evt.preventDefault()       
+        evt.preventDefault() 
+      // Password in localalstorage      
         localStorage.pass = password
         dispatch(actionCreator.gotToken( username, password))  
         // dispatch(actionCreator.getUser(token, id)) 
-        
     }
 
     const getUser = (token,id) =>{

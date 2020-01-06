@@ -53,7 +53,7 @@ export const gotToken = (username, password) => (dispatch) =>{
             password: password
         })
     }).then(res=>res.json())
-    .then(res =>{
+    .then((res) =>{
        if(res.errors ){ 
       
            dispatch(tError(res.errors))
@@ -303,10 +303,17 @@ export const sendMessageError = (data) =>{
             },
             method: "POST",
             body: JSON.stringify({
-                body:message,
-                sender_id: sender_id,
-                recipient_id: reciever_id,
-                user_id: sender_id
+               
+                conversation:{
+                    sender_id: sender_id,
+                    recipient_id: reciever_id
+                },
+                message:{
+                    user_id: sender_id, 
+                    body: message,
+                    read: false   
+                }
+                
             })
         }).then(res => res.json())
         .then(res =>{

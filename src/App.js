@@ -33,8 +33,7 @@ function App(props) {
     <Switch>
       <Route exact path="/login"   render={(routerProps)=><Login {...routerProps} gotToken={gotToken} /> }    />
       <Route path="/signUp"   render={(routerProps)=><UserForm   {...routerProps}  /> }    />
-      <Route path="/user"   render={(routerProps)=><UserContainer  {...routerProps}  /> }    />
-      
+      <Route path="/user"   render={(routerProps)=><UserContainer  {...routerProps}  /> }    />   
     </Switch>
   
   );
