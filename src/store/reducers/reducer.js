@@ -2,9 +2,10 @@
 const initialState = {
 token: null,
 id: null,
-tLoading: false,
+tLoaded: false,
 tError: [],
 uLoading:false,
+uLoaded: false,
 user:{
     name:"",
     username:"",
@@ -46,9 +47,9 @@ function reducer(state = initialState, action){
                  id: action.payload,
                  loading: false
             }
-        case "T_LOADING":
+        case "T_LOADED":
             return{
-                ...state, tLoading: action.payload
+                ...state, tLoaded: action.payload
             }
         case "T_ERROR":
             return{
@@ -57,6 +58,10 @@ function reducer(state = initialState, action){
         case "U_LOADING":
             return{
                 ...state, uLoading: action.payload
+            }
+        case "U_LOADED":
+            return{
+                ...state, uLoaded: action.payload
             }
         case "SET_USER":
             return{

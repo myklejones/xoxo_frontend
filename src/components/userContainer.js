@@ -10,7 +10,7 @@ function UserContainer(props){
     const user = useSelector(state => state.user)
     const token = useSelector(state => state.token)
     const userData= useSelector(state => state.userData)
-    const uLoaded = useSelector(state => state.uLoading)
+    const uLoaded = useSelector(state => state.uLoaded)
     const [profile, setProfile] = useState(false)
     const allUsers = useSelector(state => state.userData)
     const dispatch = useDispatch()
@@ -20,8 +20,7 @@ function UserContainer(props){
    
 
     useEffect(()=>{
-        if(localStorage.loggedInUserId && localStorage.token && !user.id){
-            dispatch(actionCreator.getUser(localStorage.token, localStorage.loggedInUserId)) }
+      
         },[])
    
 
@@ -29,6 +28,7 @@ function UserContainer(props){
       localStorage.clear()
     dispatch(actionCreator.logout(false))
   }
+  console.log(uLoaded)
 
   if(!uLoaded){
     props.history.push('/login')  
@@ -47,6 +47,7 @@ console.log(allUsers)
 return(
     
     <> 
+    <h1></h1>
     {/* <button onClick={logoutClicked}>Log Out</button> */}
      <button onClick={logoutClicked} class="ui basic blue button">
         <i aria-hidden="true" class="logout icon"></i>

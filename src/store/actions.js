@@ -2,44 +2,26 @@
     
 
 
-  export const gotTokenAsync = (json) => {
+  export const token = (json) => {
     return{
         type:"SET_TOKEN", payload: json
     }
 };
-
  export const gotId = (json) => {
     return{
         type:"SET_ID", payload: json
     }
 };
-
-export const tLoading = (bool) => {
+export const tLoaded = (bool) => {
     return{
-        type:"T_LOADING", payload: bool
+        type:"T_LOADED", payload: bool
     }
-}
-
-
+};
 export const tError = (json) => {
     return{
         type:"T_ERROR", payload: json
     }
-}
-
-export const userLoading = (data) =>{
-    return{
-        type:"U_LOADING", payload: data
-    }
-}
-
-export const userLoaded = (data) =>{
-    return{
-        type:"U_LOADED", payload: data
-    }
-}
-
-
+};
 export const gotToken = (username, password) => (dispatch) =>{
    
     fetch('http://localhost:3000/login',{
@@ -52,33 +34,42 @@ export const gotToken = (username, password) => (dispatch) =>{
             username: username,
             password: password
         })
-    }).then(res=>res.json())
+    })
+    .then(res=>res.json())
     .then((res) =>{
        if(res.errors ){ 
-      
            dispatch(tError(res.errors))
         }else{
-          dispatch(gotTokenAsync(res.token))
+            localStorage.token = res.token
+            localStorage.loggedInUserId = res.user_id
+          dispatch(token(res.token))
           dispatch(gotId(res.user_id))
-          dispatch(tLoading(true))
+          dispatch(tLoaded(true))
         }
-    
     })
 }
 
+export const userLoading = (data) =>{
+    return{
+        type:"U_LOADING", payload: data
+    }
+}
+
+export const userLoaded = (bool) =>{
+    return{
+        type:"U_LOADED", payload: bool
+    }
+}
 export const gotUser = (data) =>{
     return{
         type:"SET_USER" , payload: data
     }
 }
-
-
 export const gotAllUser = (data) =>{
     return{
         type:"SET_ALL_USER" , payload: data
     }
 }
-
 export const gotUserName = (data) =>{
     return{
         type:"SET_USER_NAME" , payload: data
@@ -137,24 +128,20 @@ export const gotUserId = (data) =>{
     }
 }
 
-export const logout = (bool) => dispatch =>{
 
-    dispatch(userLoading(bool)) 
-}
-
-export const getUser = (token, id) => dispatch =>{
-    
+export const getUser = (token, id) => dispatch =>{  
+    dispatch(tLoaded(false))
+    dispatch(userLoading(true))
     fetch(`http://localhost:3000/users/${id}`,{
         headers:{
             Accepts: 'application/json',
             'Content-type' : 'application/json',
             "Authorization": token
         } 
-    }).then(res => res.json())
+    })
+    .then(res => res.json())
     .then(res =>{
-        console.log(res)
-        dispatch(tLoading(false))
-        dispatch(gotUser(res.all_users))
+        dispatch(gotUser(res.user.data.attributes))
         dispatch(gotAllUser(res.all_users))
         dispatch(gotUserName(res.user.data.attributes.name))
         dispatch(gotUserUsername(res.user.data.attributes.username))
@@ -167,8 +154,8 @@ export const getUser = (token, id) => dispatch =>{
         dispatch(gotUserSex(res.user.data.attributes.sex))
         dispatch(gotUserActive(res.user.data.attributes.active))
         dispatch(gotUserId(res.user.data.attributes.id))
-        
-        dispatch(userLoading(true))  
+        dispatch(userLoading(false))  
+        dispatch(userLoaded(true))
         
 
 
@@ -321,3 +308,7 @@ export const sendMessageError = (data) =>{
         })
     }
     
+export const logout = ()=>dispatch=>{
+
+    dispatch(userLoaded(false))
+}

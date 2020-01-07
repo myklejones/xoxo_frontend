@@ -6,11 +6,8 @@ function Login(props) {
     const [password, setPassword] = useState("")
     const [username, setUsername] = useState("")
     const dispatch = useDispatch()
-    const created = useSelector(state=> state.newUserCreated)
-
-    const {token, id,tLoading,tError,uLoading} = useSelector(state=>state)
-    const user = useSelector(state=>state.user)
-    const userData = useSelector(state=>state.userData)
+    const {token, id,tLoaded,tError,uLoaded} = useSelector(state=>state)
+    const st = useSelector(state=>state)
     const userInput = (evt) => {
        switch(evt.target.name){
             case "username":
@@ -25,58 +22,59 @@ function Login(props) {
         props.history.push('/signUp')
     }
 
-    const loginSubmit =  (evt) =>{
+    const loginSubmit = async (evt) =>{
         evt.preventDefault() 
-      // Password in localalstorage      
-        localStorage.pass = password
+        console.log("login clicked")
         dispatch(actionCreator.gotToken( username, password))  
-        // dispatch(actionCreator.getUser(token, id)) 
+     
+       
     }
 
     const getUser = (token,id) =>{
-        props.gotToken(token,id)
         dispatch(actionCreator.getUser(token, id)) 
     }
 
     const pushUser = () =>{
         props.history.push(`user`)
     }
-
     
-    if(tLoading){
-        props.gotToken(token,id) 
-        getUser(token, id)
+    
+    
+    if(tLoaded ){
+        getUser(token, id)  
     } 
-    if(uLoading){pushUser()}
-    useEffect(()=>{
-    if(localStorage.loggedInUserId && !uLoading){
-        dispatch(actionCreator.getUser(localStorage.token, localStorage.loggedInUserId)) 
+    if(uLoaded){
+      props.gotToken(token,id)
+      pushUser()
     }
-
-
-},[])
+    
+    useEffect(()=>{
+    if(localStorage.token&&localStorage.loggedInUserId){
+      getUser(localStorage.token,localStorage.loggedInUserId)  
+    }
+    },[])
 
 
 
     return(
             <>
            <div class="ui inverted segment blue">
-  <form onSubmit={loginSubmit} class="ui inverted form ">
-    <div class="equal width fields">
-      <div class="field">
-        <label>Username</label>
-        <div class="ui fluid input"><input
-         type="text" 
-         placeholder="Username" 
-         value={username} 
-        onChange = {userInput}
-        name="username"
-        id="login_username"
-         /></div>
-      </div>
-      <div class="field">
-        <label>Password</label>
-        <div class="ui fluid input"><input 
+            <form onSubmit={loginSubmit} class="ui inverted form ">
+               <div class="equal width fields">
+                 <div class="field">
+                  <label>Username</label>
+                     <div class="ui fluid input"><input
+                      type="text" 
+                      placeholder="Username" 
+                      value={username} 
+                      onChange = {userInput}
+                      name="username"
+                      id="login_username"/>
+                    </div>
+                </div>
+               <div class="field">
+                <label>Password</label>
+                  <div class="ui fluid input"><input 
         laceholder="Password" 
         id="login_user_password"
         type="password"
@@ -84,8 +82,6 @@ function Login(props) {
         name="password"
         value={password} 
         autoComplete="off"
-
-        
         /></div>
       </div>
     </div>
