@@ -43,7 +43,7 @@ const viewProfileClicked = () =>{
 const viewUsersClicked=()=>{
     setViewUsers(!viewUsers)
 }  
-console.log(allUsers)
+
 return(
     
     <> 

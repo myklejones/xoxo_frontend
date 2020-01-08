@@ -78,10 +78,7 @@ let data = {
    
 }
 dispatch( actionCreator.newUser(data))
-
 }
-
-console.log(created)
 
 return(
     <>

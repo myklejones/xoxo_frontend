@@ -10,10 +10,12 @@ import * as actionCreator from './store/actions'
 
 
 function App(props) {
+  
   const [token, setToken] = useState(null)
   const [userId, setUserId] = useState(null)
-  const user = useSelector(state => state.user)
-
+  const {userData,user} = useSelector(state => state)
+ 
+  const {uLoaded} = useSelector(state=>state)
   const dispatch = useDispatch()
   const [activeItem, setActiveItem] = useState("home")
 
@@ -21,15 +23,14 @@ function App(props) {
     localStorage.token = token
     localStorage.loggedInUserId = userId 
   }
-
+console.log(userData)
   const handleClick = (evt, {name})=>{
       setActiveItem(name)
   }
 
- console.log(user)
-  return (
-    <>
-      <Menu color='purple'  >
+  const header = () =>{
+    return (<>
+    <Menu color='purple'  >
       <Header as='h3'>
         <Image circular src={user.photo} /> 
       </Header>
@@ -58,12 +59,22 @@ function App(props) {
           icon='logout'
         />
       </Menu>
+      <Image src={user.photo}as='a'
+    size='medium'
+    href='http://google.com'
+    target='_blank' />
+    </>
+    )}
+
+  return (
+    <>
+    { uLoaded ? header(): null}
 
 
     <Switch>
       <Route exact path="/login"   render={(routerProps)=><Login {...routerProps} gotToken={gotToken} /> }    />
       <Route path="/signUp"   render={(routerProps)=><UserForm   {...routerProps}  /> }    />
-      <Route path="/user"   render={(routerProps)=><UserContainer  {...routerProps}  /> }    />   
+      <Route path={"/:username"}  render={(routerProps)=><UserContainer  {...routerProps}  /> }    />   
     </Switch>
     </>
   

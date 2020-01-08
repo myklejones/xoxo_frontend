@@ -3,55 +3,60 @@ import {useSelector, useDispatch} from 'react-redux'
 import * as actionCreator from '../store/actions'
 
 function Login(props) {
-    const [password, setPassword] = useState("")
-    const [username, setUsername] = useState("")
-    const dispatch = useDispatch()
-    const {token, id,tLoaded,tError,uLoaded} = useSelector(state=>state)
-    const st = useSelector(state=>state)
-    const userInput = (evt) => {
-       switch(evt.target.name){
-            case "username":
-               setUsername(evt.target.value)
-               break;
-            case "password":
+  const [password, setPassword] = useState("")
+  const [ausername, setaUsername] = useState("")
+  const dispatch = useDispatch()
+  const {token,user,username,  id,tLoaded,tError,uLoaded} = useSelector(state=>state)
+  const st = useSelector(state=>state)
+  const userInput = (evt) => {
+    switch(evt.target.name){
+            case "ausername":
+              setaUsername(evt.target.value)
+              break;
+              case "password":
                 setPassword(evt.target.value)
                 break;
-       }
-    }
-    const signUpClicked = () =>{
-        props.history.push('/signUp')
-    }
-
-    const loginSubmit = async (evt) =>{
-        evt.preventDefault() 
-        console.log("login clicked")
-        dispatch(actionCreator.gotToken( username, password))  
-     
-       
-    }
+              }
+            }
+            const signUpClicked = () =>{
+              props.history.push('/signUp')
+            }
+            
+            const loginSubmit = async (evt) =>{
+              evt.preventDefault() 
+              console.log("login clicked")
+              dispatch(actionCreator.gotToken( ausername, password))  
+              
+              
+            }
+            // const lo = props.match.path = `/${user.username}`
+            // console.log(lo)
 
     const getUser = (token,id) =>{
         dispatch(actionCreator.getUser(token, id)) 
     }
 
     const pushUser = () =>{
-        props.history.push(`user`)
+        props.history.push(`/${user.username}`)
     }
     
     
     
     if(tLoaded ){
+      localStorage.token = token
+      localStorage.loggedInUserId = id
         getUser(token, id)  
     } 
+    // else if(localStorage.token &&localStorage.loggedInUserId){
+    //   getUser(localStorage.token,localStorage.loggedInUserId) 
+    // }
     if(uLoaded){
       props.gotToken(token,id)
       pushUser()
     }
-    
+   
     useEffect(()=>{
-    if(localStorage.token&&localStorage.loggedInUserId){
-      getUser(localStorage.token,localStorage.loggedInUserId)  
-    }
+    
     },[])
 
 
@@ -68,7 +73,7 @@ function Login(props) {
                       placeholder="Username" 
                       value={username} 
                       onChange = {userInput}
-                      name="username"
+                      name="ausername"
                       id="login_username"/>
                     </div>
                 </div>
