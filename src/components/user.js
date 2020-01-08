@@ -1,11 +1,10 @@
 import React,{useState} from 'react';
-import {useSelector, useDispatch} from 'react-redux'
+import {useSelector} from 'react-redux'
 
 
 
 function User(props){
-    const [profile, setProfile] = useState(false)
-    const [edit, setEdit] = useState(false)
+    
     
     const user = useSelector(state => state.user)
     const error = useSelector(state => state.errorUpdatingUser)

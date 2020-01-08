@@ -1,5 +1,6 @@
 import React,{ useState, useEffect, Fragment} from 'react';
 import {useSelector, useDispatch} from 'react-redux'
+import { Button, Form, Icon, Message } from 'semantic-ui-react'
 import * as actionCreator from '../store/actions'
 
 function UserForm(props){
@@ -16,9 +17,9 @@ function UserForm(props){
         const [dob, setDob] = useState("")
         const [cityState, setCityState] = useState("")
         const [aboutMe, setAboutMe] = useState("")
-        const [sex, setSex] = useState("")
         const [email, setEmail] = useState("")
-        const [photo, setPhoto] = useState("")
+        const [lastName, setLastName] = useState("")
+        const [firstName, setFirstName] = useState("")
 const formInput= (evt)=>{
     switch(evt.target.name){
         case "username":
@@ -27,29 +28,16 @@ const formInput= (evt)=>{
         case "password":
             setPassword(evt.target.value)
             break;
-        case "name":
-            setName(evt.target.value)
+        case 'First Name':
+            setFirstName(evt.target.value)
             break;
-        case "age":
-            setAge(evt.target.value)
-            break;
-        case "dob":
-            setDob(evt.target.value)
-            break;
-        case "cityState":
-            setCityState(evt.target.value)
-            break;
-        case "aboutMe":
-            setAboutMe(evt.target.value)
-            break;
-        case "sex":
-            setSex(evt.target.value)
+        case 'Last Name':
+            setLastName(evt.target.value)
             break;
         case "email":
             setEmail(evt.target.value)
             break;
-        case "photo" :
-            setPhoto(evt.target.value)
+      
 
    }
 
@@ -63,17 +51,13 @@ const loginClicked = () => {
 
 const formSubmit = (e)=>{
 e.preventDefault() 
+let name = firstName +" "+ lastName
+console.log(name)
 let data = {
     username: username,
     name: name,
     password: password,
-    age: age,
-    city_state: cityState,
-    about_me: aboutMe,
-    sex:sex,
     email: email,
-    photo: photo,
-    dob: dob,
     active: false
    
 }
@@ -82,150 +66,60 @@ dispatch( actionCreator.newUser(data))
 
 return(
     <>
+        <Message
+        attached
+        header='Welcome to XoXo'
+        content='Fill out the form below to sign-up for a new account'
+      />
+        <Form onSubmit={formSubmit} className='attached fluid segment'>
+          <Form.Group widths='equal'>
+             <Form.Input
+              fluid
+              onChange = {formInput}
+              label='First Name'
+              name='First Name'
+              placeholder='First Name'
+              type='text'
+              />
+            <Form.Input
+             onChange = {formInput}
+              fluid
+              label='Last Name'
+              name='Last Name'
+              placeholder='Last Name'
+              type='text'
+              />
+            </Form.Group>
+            <Form.Input label='Username' placeholder='Username' type='text' />
+            <Form.Input 
+            id="password"
+            label='Password' 
+            type='password'  
+            onChange = {formInput}
+            name="password"
+            placeholder='Password'
+             value={password}  />
+            <Form.Input 
+            label='Email' 
+            id="email"
+            type="text"
+            onChange = {formInput}
+            name="email"
+            value={email}
+            placeholder='Email' 
+            />
+          
+            <Form.Checkbox inline label='I agree to the terms and conditions' />
+            <Button color='blue' type="submit" > Submit</Button>
+        </Form>
+    <Message attached='bottom' warning>
+      <Icon name='help' />
+      Already signed up?&nbsp;<a href='/login'>Login here</a>&nbsp;instead.
+    </Message>
     {created ? loginClicked(): null}
-<button class="ui basic button blue" onClick={loginClicked}>Login</button>
     {created ? loginClicked(): null}
     {newUserError.errors ? newUserError.errors.map(error=> <li>{error}</li>) : null}
-    <form  class="ui form" onSubmit={formSubmit}>
-
-        <h1>Create New User</h1>
-        <ol><label htmlFor="username">Username </label>
-     <input
-     id="username"
-      type="text"
-      onChange = {formInput}
-      name="username"
-      value={username} 
-      /></ol>
-
-    <ol> <label htmlFor="password">password </label>
-     <input
-     id="password"
-      type="password"
-      onChange = {formInput}
-      name="password"
-      value={password} 
-      /></ol>
-
-<ol>
-      <label htmlFor="email">email </label>
-     <input
-     id="email"
-      type="text"
-      onChange = {formInput}
-      name="email"
-      value={email} 
-      autoComplete="off"
-      /></ol>
-
     
-    <ol>
-      <label htmlFor="name">Name </label>
-     <input
-     id="name"
-      type="text"
-      onChange = {formInput}
-      name="name"
-      value={name} 
-      autoComplete="off"
-      /></ol>
-
-<ol>
-      <label htmlFor="photo">Photo </label>
-     <input
-     id="photo"
-      type="text"
-      onChange = {formInput}
-      name="photo"
-      value={photo} 
-      autoComplete="off"
-      /></ol>
-
-    <ol>
-      <label htmlFor="age">Age </label>
-     <input
-     id="age"
-      type="number"
-      onChange = {formInput}
-      name="age"
-      value={age} 
-      autoComplete="off"
-      /></ol>
-
-    <ol><label htmlFor="dob">Birthdate </label>
-     <input
-     id="dob"
-      type="text"
-      onChange = {formInput}
-      name="dob"
-      value={dob} 
-      autoComplete="off"
-      /></ol>
-      
-     
-      <ol><label htmlFor="city_state">City & State </label>
-     <input
-     id="city_state"
-      type="text"
-      onChange = {formInput}
-      name="cityState"
-      value={cityState} 
-      autoComplete="off"
-      /></ol>
-
-       <ol><label htmlFor="aboutMe">About Me </label>
-     <input
-     id="aboutMe"
-      type="text"
-      onChange = {formInput}
-      name="aboutMe"
-      value={aboutMe} 
-      autoComplete="off"
-      /></ol>
-       
-       <ol> 
-       <label for="male" >Male  </label> 
-           <input
-     id="male"
-      type="radio"
-      onChange = {formInput}
-      name="sex"
-      value="male" 
-    />
-    </ol>
-       
-       <ol> 
-    <label for="female" >Female  </label> 
-    <input
-     id="female"
-      type="radio"
-      onChange = {formInput}
-      name="sex"
-      value="felmale" 
-    />
-    </ol>
-       
-       <ol> 
-    <label for="other" >Other </label> 
-
-    <input
-    id="other"
-     type="radio"
-     onChange = {formInput}
-     name="sex"
-     value="other" 
-   />
-</ol>
-
-
-{/* <label htmlFor="sex">Sex </label> */}
-    
-
-
-     <button class="ui basic button purple" type="submit" value="submit">Create User</button>
- 
-</form>
-
 
 
 </>

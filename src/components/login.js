@@ -7,17 +7,18 @@ function Login(props) {
   const [ausername, setaUsername] = useState("")
   const dispatch = useDispatch()
   const {token,user,username,  id,tLoaded,tError,uLoaded} = useSelector(state=>state)
-  const st = useSelector(state=>state)
+ 
   const userInput = (evt) => {
     switch(evt.target.name){
-            case "ausername":
-              setaUsername(evt.target.value)
-              break;
-              case "password":
-                setPassword(evt.target.value)
-                break;
-              }
-            }
+      case "ausername":
+          setaUsername(evt.target.value)
+          break;
+      case "password":
+          setPassword(evt.target.value)
+          break;
+      }
+    }
+
             const signUpClicked = () =>{
               props.history.push('/signUp')
             }
@@ -26,8 +27,7 @@ function Login(props) {
               evt.preventDefault() 
               console.log("login clicked")
               dispatch(actionCreator.gotToken( ausername, password))  
-              
-              
+                
             }
             // const lo = props.match.path = `/${user.username}`
             // console.log(lo)
@@ -42,16 +42,9 @@ function Login(props) {
     
     
     
-    if(tLoaded ){
-      localStorage.token = token
-      localStorage.loggedInUserId = id
-        getUser(token, id)  
-    } 
-    // else if(localStorage.token &&localStorage.loggedInUserId){
-    //   getUser(localStorage.token,localStorage.loggedInUserId) 
-    // }
-    if(uLoaded){
-      props.gotToken(token,id)
+    if(tLoaded){
+      getUser(token, id)  
+    }else if(uLoaded){
       pushUser()
     }
    

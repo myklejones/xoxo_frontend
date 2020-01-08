@@ -1,3 +1,4 @@
+import { activeItem } from "../actions"
 
 const initialState = {
 token: null,
@@ -21,7 +22,7 @@ user:{
 
 
 },
-allUsers:{}, 
+allUsers:[], 
 userData:[],
 updatingUser: false,
 errorUpdatingUser: {},
@@ -29,7 +30,8 @@ newUserError:{},
 newUserCreated: false,
 sendMessageLoading: false,
 sendMessageLoaded: {},
-sendMessageError: {}
+sendMessageError: {},
+activeItem:""
 }
 
 function reducer(state = initialState, action){
@@ -69,7 +71,7 @@ function reducer(state = initialState, action){
             }
         case "SET_ALL_USERS":
             return{
-                ...state, allUsers:action.payload
+                ...state, allUsers: action.payload
             }
         case "SET_USER_USERNAME":
                 return{
@@ -143,7 +145,10 @@ function reducer(state = initialState, action){
                 return{
                     ...state, sendMessageError: action.payload
                 }
-
+        case "SET_ACTIVE_ITEM":
+            return{
+                ...state, activeItem: action.payload
+            }
         default:
             return{
                 ...state

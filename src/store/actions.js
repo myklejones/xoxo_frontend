@@ -40,8 +40,7 @@ export const gotToken = (username, password) => (dispatch) =>{
        if(res.errors ){ 
            dispatch(tError(res.errors))
         }else{
-            localStorage.token = res.token
-            localStorage.loggedInUserId = res.user_id
+    
           dispatch(token(res.token))
           dispatch(gotId(res.user_id))
           dispatch(tLoaded(true))
@@ -67,7 +66,7 @@ export const gotUser = (data) =>{
 }
 export const gotAllUser = (data) =>{
     return{
-        type:"SET_ALL_USER" , payload: data
+        type:"SET_ALL_USERS" , payload: data
     }
 }
 export const gotUserName = (data) =>{
@@ -141,6 +140,7 @@ export const getUser = (token, id) => dispatch =>{
     })
     .then(res => res.json())
     .then(res =>{
+        console.log(res.all_users)
         dispatch(gotUser(res.user.data.attributes))
         dispatch(gotAllUser(res.all_users))
         dispatch(gotUserName(res.user.data.attributes.name))
@@ -249,7 +249,6 @@ export const newUser = (userinfo) => dispatch => {
             if(data.errors){
                 dispatch(newUserError(data))
             }else{
-               
                 dispatch(newUserCreated(true))
 
             }
@@ -308,7 +307,19 @@ export const sendMessageError = (data) =>{
         })
     }
     
-export const logout = ()=>dispatch=>{
-
-    dispatch(userLoaded(false))
-}
+    export const setActiveItem = (data) =>{
+        
+        return{
+            type:"SET_ACTIVE_ITEM" , payload: data
+        }
+    }
+    
+    export const activeItemSetter = (data)=>dispatch=>{
+        
+        dispatch(setActiveItem(data))
+    }
+                export const logout = (data = "home")=>dispatch=>{
+                
+                    dispatch(userLoaded(false))
+                    dispatch(setActiveItem(data))
+                }

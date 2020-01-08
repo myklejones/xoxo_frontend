@@ -1,68 +1,99 @@
 import React,{useState} from 'react';
 import { Route, Switch} from 'react-router'
+import { Link} from 'react-router-dom'
 import Login from './components/login'
 import UserForm from './components/userForm'
 import {useSelector, useDispatch} from 'react-redux'
 import UserContainer from './components/userContainer'
-import { Menu, Header, Image, Segment} from 'semantic-ui-react'
+import AllUserContainer from './components/allUsersContainer.js'
+import { Menu, Header, Image} from 'semantic-ui-react'
 
 import * as actionCreator from './store/actions'
 
 
 function App(props) {
   
-  const [token, setToken] = useState(null)
-  const [userId, setUserId] = useState(null)
-  const {userData,user} = useSelector(state => state)
  
-  const {uLoaded} = useSelector(state=>state)
+  const {uLoaded, id,token,userData,user,activeItem, allUsers } = useSelector(state => state)
   const dispatch = useDispatch()
-  const [activeItem, setActiveItem] = useState("home")
+  const [activeItemSel, setActiveItemSel] = useState("home")
 
-  const gotToken = (token, userId ) =>{
+  const gotToken = () =>{
     localStorage.token = token
-    localStorage.loggedInUserId = userId 
+    localStorage.loggedInUserId = id 
   }
-console.log(userData)
+console.log(allUsers)
   const handleClick = (evt, {name})=>{
-      setActiveItem(name)
+    
+    
+    if(name === "logout"){
+      setActiveItemSel("home")
+      localStorage.clear()
+      dispatch(actionCreator.logout(name)) 
+      
+      
+    }else{
+      dispatch(actionCreator.activeItemSetter(name))
+      setActiveItemSel(name)
+      }
+     
   }
-
+  
+ 
   const header = () =>{
+    gotToken(token,id)
     return (<>
-    <Menu color='purple'  >
+   
+     <Menu color='blue'  >
       <Header as='h3'>
         <Image circular src={user.photo} /> 
       </Header>
         <Menu.Item
+
           name='home'
-          active={activeItem === 'home'}
+          active={activeItemSel === 'home'}
           onClick={handleClick}
           icon='home'
+          as={Link}
+          to={`/${user.username}`}
+          
         />
         <Menu.Item
           name='messages'
-          active={activeItem === 'messages'}
+          active={activeItemSel === 'messages'}
           onClick={handleClick}
           icon='envelope'
+          as={Link}
+          to={`/${user.username}/messages`}
+
         />
         <Menu.Item
           name='users'
-          active={activeItem === 'users'}
+          active={activeItemSel === 'users'}
           onClick={handleClick}
           icon='user'
+          as={Link}
+          to={`/${user.username}/users`}
         />
+          {/* <Menu.Item
+          name='profile'
+          active={activeItemSel === 'profile'}
+          onClick={handleClick}
+          icon='profile'
+          as={Link}
+          to={`/${user.username}/users`}
+        /> */}
+
          <Menu.Item
           name='logout'
-          active={activeItem === 'logout'}
+          active={activeItemSel === 'logout'}
           onClick={handleClick}
           icon='logout'
+          as={Link}
+          to={`/login`}
         />
-      </Menu>
-      <Image src={user.photo}as='a'
-    size='medium'
-    href='http://google.com'
-    target='_blank' />
+      </Menu> 
+      
     </>
     )}
 
@@ -72,9 +103,10 @@ console.log(userData)
 
 
     <Switch>
-      <Route exact path="/login"   render={(routerProps)=><Login {...routerProps} gotToken={gotToken} /> }    />
+      <Route exact path="/login"   render={(routerProps)=><Login {...routerProps}  /> }    />
       <Route path="/signUp"   render={(routerProps)=><UserForm   {...routerProps}  /> }    />
-      <Route path={"/:username"}  render={(routerProps)=><UserContainer  {...routerProps}  /> }    />   
+      <Route exact path={`/${user.username}`}  render={(routerProps)=><UserContainer  {...routerProps}   /> }    />   
+      <Route exact path={`/${user.username}/users`}  render={(routerProps)=><AllUserContainer  {...routerProps}  /> }    />   
     </Switch>
     </>
   
