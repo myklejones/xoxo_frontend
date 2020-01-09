@@ -323,3 +323,8 @@ export const sendMessageError = (data) =>{
                     dispatch(userLoaded(false))
                     dispatch(setActiveItem(data))
                 }
+
+
+                export const userIsLoaded = (bool)=>dispatch=>{
+                    dispatch(userLoaded(bool))
+                }

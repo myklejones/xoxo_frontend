@@ -46,6 +46,8 @@ function Login(props) {
       getUser(token, id)  
     }else if(uLoaded){
       pushUser()
+    }else if(localStorage.token && !uLoaded){
+      dispatch(actionCreator.userIsLoaded(true))
     }
    
     useEffect(()=>{
