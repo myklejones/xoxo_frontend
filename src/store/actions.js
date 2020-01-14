@@ -23,7 +23,7 @@ export const tError = (json) => {
     }
 };
 export const gotToken = (username, password) => (dispatch) =>{
-   
+    dispatch(userLoading(true))
     fetch('http://localhost:3000/login',{
         method: 'POST',
         headers:{
@@ -130,7 +130,7 @@ export const gotUserId = (data) =>{
 
 export const getUser = (token, id) => dispatch =>{  
     dispatch(tLoaded(false))
-    dispatch(userLoading(true))
+  
     fetch(`http://localhost:3000/users/${id}`,{
         headers:{
             Accepts: 'application/json',
@@ -154,8 +154,8 @@ export const getUser = (token, id) => dispatch =>{
         dispatch(gotUserSex(res.user.data.attributes.sex))
         dispatch(gotUserActive(res.user.data.attributes.active))
         dispatch(gotUserId(res.user.data.attributes.id))
-        dispatch(userLoading(false))  
         dispatch(userLoaded(true))
+        dispatch(userLoading(false))  
         
 
 

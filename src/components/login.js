@@ -6,7 +6,7 @@ function Login(props) {
   const [password, setPassword] = useState("")
   const [ausername, setaUsername] = useState("")
   const dispatch = useDispatch()
-  const {token,user,username,  id,tLoaded,tError,uLoaded} = useSelector(state=>state)
+  const {token,user,username,  id,tLoaded,tError,uLoaded, uLoading } = useSelector(state=>state)
  
   const userInput = (evt) => {
     switch(evt.target.name){
@@ -39,17 +39,14 @@ function Login(props) {
     const pushUser = () =>{
         props.history.push(`/${user.username}`)
     }
-    
+    console.log(uLoading)
     
     
     if(tLoaded){
       getUser(token, id)  
     }else if(uLoaded){
       pushUser()
-    }else if(localStorage.token && !uLoaded){
-      dispatch(actionCreator.userIsLoaded(true))
     }
-   
     useEffect(()=>{
     
     },[])

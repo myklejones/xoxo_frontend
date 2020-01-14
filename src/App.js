@@ -7,6 +7,7 @@ import {useSelector, useDispatch} from 'react-redux'
 import UserContainer from './components/userContainer'
 import AllUserContainer from './components/allUsersContainer.js'
 import { Menu, Header, Image} from 'semantic-ui-react'
+import MessageContainer from './components/MessageContainer'
 
 import * as actionCreator from './store/actions'
 
@@ -15,6 +16,7 @@ function App(props) {
   
  
   const {uLoaded, id,token,userData,user,activeItem, allUsers } = useSelector(state => state)
+  const myState = useSelector(state => state)
   const dispatch = useDispatch()
   const [activeItemSel, setActiveItemSel] = useState("home")
 
@@ -22,7 +24,7 @@ function App(props) {
     localStorage.token = token
     localStorage.loggedInUserId = id 
   }
-console.log(allUsers)
+console.log(myState )
   const handleClick = (evt, {name})=>{
     
     
@@ -106,7 +108,8 @@ console.log(allUsers)
       <Route exact path="/login"   render={(routerProps)=><Login {...routerProps}  /> }    />
       <Route path="/signUp"   render={(routerProps)=><UserForm   {...routerProps}  /> }    />
       <Route exact path={`/${user.username}`}  render={(routerProps)=><UserContainer  {...routerProps}   /> }    />   
-      <Route exact path={`/${user.username}/users`}  render={(routerProps)=><AllUserContainer  {...routerProps}  /> }    />   
+      <Route exact path={`/${user.username}/users`}  render={(routerProps)=><AllUserContainer  {...routerProps}  /> }    />
+      <Route exact path={`/${user.username}/messages`}  render={(routerProps)=><MessageContainer  {...routerProps}  /> }    />   
     </Switch>
     </>
   
