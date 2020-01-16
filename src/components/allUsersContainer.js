@@ -2,7 +2,7 @@ import React,{useState, useEffect} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 import * as actionCreator from '../store/actions'
 import AUser from './aUser'
-import {Header, Card, Grid, Image,Container, Divider} from 'semantic-ui-react'
+import {Header, Card, Grid, Image,Container, Button} from 'semantic-ui-react'
 
 function AllUsersContainer(props){
    
@@ -43,11 +43,26 @@ function AllUsersContainer(props){
                                            </Header>
                                            {theUser.city_state}
                                            <Header as='h3' >
+                                                Occupation
+                                           </Header>
+                                           {theUser.profession}
+                                           <Header as='h3' >
                                                 About me
                                            </Header>
                                            {theUser.about_me}
+                                           <Header as='h3' >
+                                                Interested in
+                                           </Header>
+                                           {theUser.interest}
+                                           <Header as='h3' >
+                                                Body Type
+                                           </Header>
+                                           {theUser.body_type}
                                         </Container>
-
+                                <Button.Group attached='bottom' > 
+                                    <Button basic color='blue' > Message </Button>
+                                    <Button basic color='teal' > Other Users </Button>
+                                </Button.Group>
                                     
                 </>
             )
