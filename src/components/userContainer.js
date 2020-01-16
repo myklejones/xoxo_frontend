@@ -64,7 +64,7 @@ View Profile
 </button>: null} */}
             
 
-            {!viewUsers ? null : <AllUsersContainer  users={allUsers} />}
+            {/* {!viewUsers ? null : <AllUsersContainer  users={allUsers} />} */}
            
             {!viewUsers ?<><User viewSelf={viewProfileClicked} props={props} showAll={profile} />{edit ? <><EditUserForm from="Edit" self={user} /><button class="ui basic button blue"  onClick={editClicked}>Cancel</button></> : <button  class="ui basic blue button" onClick={editClicked}>Edit Profile</button>}</> : null} 
         
