@@ -11,6 +11,7 @@ function AllUsersContainer(props){
     const [theUser, setTheUser] = useState({})
     
     
+    
 
     useEffect(()=>{
         },[])
@@ -23,11 +24,12 @@ function AllUsersContainer(props){
             setTheUser(filteredUser)
             setOneUser(!oneUser)
         }
+        const messageUserclicked = ()=>{
+
+        }
        const showOneUser = () => {
            return(
                 <>
-                <h1 onClick={userClicked}>hiii</h1>
-                    
                                             <Image src={theUser.photo} 
                                               centered
                                               size='medium'
@@ -60,8 +62,8 @@ function AllUsersContainer(props){
                                            {theUser.body_type}
                                         </Container>
                                 <Button.Group attached='bottom' > 
-                                    <Button basic color='blue' > Message </Button>
-                                    <Button basic color='teal' > Other Users </Button>
+                                    <Button basic color='blue' onClick={messageUserclicked} > Message </Button>
+                                    <Button basic color='teal' onClick={userClicked} > Other Users </Button>
                                 </Button.Group>
                                     
                 </>
@@ -72,7 +74,7 @@ function AllUsersContainer(props){
                 <>
           
                 <Card.Group itemsPerRow={5}>
-                    {allUsers.map(auser => {
+                    {allUsers.filter(u => u.id !== parseInt(localStorage.loggedInUserId)).map(auser => {
                             return(
                           <Card color='blue'id={auser.id} onClick={userClicked} >
                             <Image src={auser.photo} size="medium" wrapped ui={false} />
