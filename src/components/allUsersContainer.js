@@ -2,14 +2,15 @@ import React,{useState, useEffect} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 import * as actionCreator from '../store/actions'
 import AUser from './aUser'
-import {Header, Card, Grid, Image,Container, Button} from 'semantic-ui-react'
+import {Form, TextArea, Header, Card, Grid, Image,Container, Button} from 'semantic-ui-react'
 
 function AllUsersContainer(props){
    
     const {uLoaded, id,token,userData,user,activeItem, allUsers } = useSelector(state => state)
     const [oneUser, setOneUser] = useState(false)
     const [theUser, setTheUser] = useState({})
-    
+    const [messageinput,setMessageInput] = useState('')
+    const [messageForUser, setMessageForUser] = useState(false)
     
     
 
@@ -25,8 +26,20 @@ function AllUsersContainer(props){
             setOneUser(!oneUser)
         }
         const messageUserclicked = ()=>{
+            setMessageForUser(!messageForUser)
 
         }
+
+        const sendMeesageToUser =(e)=>{
+            e.preventDefault()
+                console.log(e)
+        }
+        const messageInput= (evt)=>{
+            setMessageInput(evt.target.value)
+            console.log(messageinput)
+        
+        }
+        
        const showOneUser = () => {
            return(
                 <>
@@ -61,6 +74,10 @@ function AllUsersContainer(props){
                                            </Header>
                                            {theUser.body_type}
                                         </Container>
+                                       {messageForUser ? <Form>
+                                             <TextArea onChange={messageInput} style={{ minHeight: 100 }} />
+                                             <Button basic color='red' onSubmit={sendMeesageToUser} > Send</Button>
+                                         </Form> : null } 
                                 <Button.Group attached='bottom' > 
                                     <Button basic color='blue' onClick={messageUserclicked} > Message </Button>
                                     <Button basic color='teal' onClick={userClicked} > Other Users </Button>
