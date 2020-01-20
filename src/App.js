@@ -48,7 +48,7 @@ console.log(myState )
    
      <Menu color='blue'  >
       <Header as='h3'>
-        <Image circular src={user.photo} /> 
+        <Image circular src={userData.photo} /> 
       </Header>
         <Menu.Item
 
@@ -57,7 +57,7 @@ console.log(myState )
           onClick={handleClick}
           icon='home'
           as={Link}
-          to={`/${user.username}`}
+          to={`/${userData.username}`}
           
         />
         <Menu.Item
@@ -66,7 +66,7 @@ console.log(myState )
           onClick={handleClick}
           icon='envelope'
           as={Link}
-          to={`/${user.username}/messages`}
+          to={`/${userData.username}/messages`}
 
         />
         <Menu.Item
@@ -75,16 +75,9 @@ console.log(myState )
           onClick={handleClick}
           icon='user'
           as={Link}
-          to={`/${user.username}/users`}
+          to={`/${userData.username}/users`}
         />
-          {/* <Menu.Item
-          name='profile'
-          active={activeItemSel === 'profile'}
-          onClick={handleClick}
-          icon='profile'
-          as={Link}
-          to={`/${user.username}/users`}
-        /> */}
+  
 
          <Menu.Item
           name='logout'
@@ -107,9 +100,9 @@ console.log(myState )
     <Switch>
       <Route exact path="/login"   render={(routerProps)=><Login {...routerProps}  /> }    />
       <Route path="/signUp"   render={(routerProps)=><UserForm   {...routerProps}  /> }    />
-      <Route exact path={`/${user.username}`}  render={(routerProps)=><UserContainer  {...routerProps}   /> }    />   
-      <Route exact path={`/${user.username}/users`}  render={(routerProps)=><AllUserContainer  {...routerProps}  /> }    />
-      <Route exact path={`/${user.username}/messages`}  render={(routerProps)=><MessageContainer  {...routerProps}  /> }    />   
+      <Route exact path={`/${userData.username}`}  render={(routerProps)=><UserContainer  {...routerProps}   /> }    />   
+      <Route exact path={`/${userData.username}/users`}  render={(routerProps)=><AllUserContainer  {...routerProps}  /> }    />
+      <Route exact path={`/${userData.username}/messages`}  render={(routerProps)=><MessageContainer  {...routerProps}  /> }    />   
     </Switch>
     </>
   

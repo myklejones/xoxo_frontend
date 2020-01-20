@@ -4,6 +4,7 @@ import User from './user'
 import EditUserForm from './editUserForm'
 import * as actionCreator from '../store/actions'
 import AllUsersContainer from './allUsersContainer.js'
+import {Button} from 'semantic-ui-react'
  
 
 function UserContainer(props){
@@ -52,24 +53,8 @@ const viewUsersClicked=()=>{
 
 return(  
     <> 
-    <h1></h1>
-    {/* <button onClick={logoutClicked}>Log Out</button> */}
-     {/* <button onClick={logoutClicked} class="ui basic blue button">
-        <i aria-hidden="true" class="logout icon"></i>
-            Logout
-        </button> */}
-            {/* {!viewUsers ? <button onClick={viewProfileClicked} class="ui basic blue button">
-<i aria-hidden="true" class="profile icon"></i>
-View Profile
-</button>: null} */}
-            
-
-            {/* {!viewUsers ? null : <AllUsersContainer  users={allUsers} />} */}
-           
-            {!viewUsers ?<><User viewSelf={viewProfileClicked} props={props} showAll={profile} />{edit ? <><EditUserForm from="Edit" self={user} /><button class="ui basic button blue"  onClick={editClicked}>Cancel</button></> : <button  class="ui basic blue button" onClick={editClicked}>Edit Profile</button>}</> : null} 
-        
-       
-
+    <User viewSelf={viewProfileClicked} props={props} showAll={profile} />
+            {edit ? <><EditUserForm  /><Button basic color="blue" onClick={editClicked}>Cancel</Button></> : <Button color="blue" onClick={editClicked}>Edit Profile</Button> }
         </>
     )
 } 

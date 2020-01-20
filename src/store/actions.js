@@ -69,63 +69,6 @@ export const gotAllUser = (data) =>{
         type:"SET_ALL_USERS" , payload: data
     }
 }
-export const gotUserName = (data) =>{
-    return{
-        type:"SET_USER_NAME" , payload: data
-    }
-}
-
-export const gotUserUsername = (data) =>{
-    return{
-        type:"SET_USER_USERNAME" , payload: data
-    }
-}
-export const gotUserAge = (data) =>{
-    return{
-        type:"SET_USER_AGE" , payload: data
-    }
-}
-export const gotUserEmail = (data) =>{
-    return{
-        type:"SET_USER_EMAIL" , payload: data
-    }
-}
-export const gotUserPhoto = (data) =>{
-    return{
-        type:"SET_USER_PHOTO" , payload: data
-    }
-}
-export const gotUserDob = (data) =>{
-    return{
-        type:"SET_USER_DOB" , payload: data
-    }
-}
-export const gotUserCityState = (data) =>{
-    return{
-        type:"SET_USER_CITY_STATE" , payload: data
-    }
-}
-export const gotUserAboutMe = (data) =>{
-    return{
-        type:"SET_USER_ABOUT_ME" , payload: data
-    }
-}
-export const gotUserSex = (data) =>{
-    return{
-        type:"SET_USER_SEX" , payload: data
-    }
-}
-export const gotUserActive = (data) =>{
-    return{
-        type:"SET_USER_ACTIVE" , payload: data
-    }
-}
-
-export const gotUserId = (data) =>{
-    return{
-        type:"SET_USER_ID" , payload: data
-    }
-}
 
 
 export const getUser = (token, id) => dispatch =>{  
@@ -140,25 +83,11 @@ export const getUser = (token, id) => dispatch =>{
     })
     .then(res => res.json())
     .then(res =>{
-        console.log(res.all_users)
+        debugger
         dispatch(gotUser(res.user.data.attributes))
         dispatch(gotAllUser(res.all_users))
-        dispatch(gotUserName(res.user.data.attributes.name))
-        dispatch(gotUserUsername(res.user.data.attributes.username))
-        dispatch(gotUserAge(res.user.data.attributes.age))
-        dispatch(gotUserEmail(res.user.data.attributes.email))
-        dispatch(gotUserPhoto(res.user.data.attributes.photo))
-        dispatch(gotUserDob(res.user.data.attributes.dob))
-        dispatch(gotUserCityState(res.user.data.attributes.city_state))
-        dispatch(gotUserAboutMe(res.user.data.attributes.about_me))
-        dispatch(gotUserSex(res.user.data.attributes.sex))
-        dispatch(gotUserActive(res.user.data.attributes.active))
-        dispatch(gotUserId(res.user.data.attributes.id))
         dispatch(userLoaded(true))
         dispatch(userLoading(false))  
-        
-
-
     })
 } 
 
@@ -198,16 +127,7 @@ dispatch(updatingUser(true))
          dispatch(errorUpdatingUser(data))   
         }else{
             dispatch(updatingUser(false))
-            dispatch(gotUserName(data.user.name))
-            dispatch(gotUserUsername(data.user.username))
-            dispatch(gotUserAge(data.user.age))
-            dispatch(gotUserEmail(data.user.email))
-            dispatch(gotUserPhoto(data.user.photo))
-            dispatch(gotUserDob(data.user.dob))
-            dispatch(gotUserCityState(data.user.city_state))
-            dispatch(gotUserAboutMe(data.user.about_me))
-            dispatch(gotUserSex(data.user.sex)) 
-
+            dispatch(gotUser(data.user))
         }
     })
 
@@ -327,4 +247,15 @@ export const sendMessageError = (data) =>{
 
                 export const userIsLoaded = (bool)=>dispatch=>{
                     dispatch(userLoaded(bool))
+                }
+
+                export const setInteractingUser = (data)=>{
+                    return{
+                       type:"SET_INTERACTING_USER" , payload: data  
+                    }
+                }
+
+                export const interactingUser = data => dispatch =>{
+                    dispatch(setInteractingUser(data))
+
                 }

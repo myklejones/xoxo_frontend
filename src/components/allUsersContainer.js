@@ -44,12 +44,12 @@ function AllUsersContainer(props){
            return(
                 <>
                                             <Image src={theUser.photo} 
-                                              centered
+                                            
                                               size='medium'
                                               attached='top'
                                               
                                               />
-                                        <Header as='h1' fluid textAlign='center'  attached >
+                                        <Header as='h1'  attached >
                                             {theUser.username}, {theUser.age}
                                         </Header>
                                         <Container fluid > 

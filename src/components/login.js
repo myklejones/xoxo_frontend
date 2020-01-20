@@ -6,7 +6,7 @@ function Login(props) {
   const [password, setPassword] = useState("")
   const [ausername, setaUsername] = useState("")
   const dispatch = useDispatch()
-  const {token,user,username,  id,tLoaded,tError,uLoaded, uLoading } = useSelector(state=>state)
+  const {token,userData,username,id,tLoaded,tError,uLoaded,uLoading} = useSelector(state=>state)
  
   const userInput = (evt) => {
     switch(evt.target.name){
@@ -37,7 +37,7 @@ function Login(props) {
     }
 
     const pushUser = () =>{
-        props.history.push(`/${user.username}`)
+        props.history.push(`/${userData.username}`)
     }
     console.log(uLoading)
     

@@ -1,4 +1,4 @@
-import { activeItem } from "../actions"
+import { activeItem, interactingUser } from "../actions"
 
 const initialState = {
 token: null,
@@ -7,23 +7,8 @@ tLoaded: false,
 tError: [],
 uLoading:false,
 uLoaded: false,
-user:{
-    name:"",
-    username:"",
-    email:"",
-    age:null,
-    photo:"",
-    dob: "",
-    city_state:"",
-    about_me:"",
-    sex:"",
-    active: false,
-    id:null
-
-
-},
 allUsers:[], 
-userData:[],
+userData:{},
 updatingUser: false,
 errorUpdatingUser: {},
 newUserError:{},
@@ -31,7 +16,8 @@ newUserCreated: false,
 sendMessageLoading: false,
 sendMessageLoaded: {},
 sendMessageError: {},
-activeItem:""
+activeItem:"",
+interactingUser:{}
 }
 
 function reducer(state = initialState, action){
@@ -73,50 +59,6 @@ function reducer(state = initialState, action){
             return{
                 ...state, allUsers: action.payload
             }
-        case "SET_USER_USERNAME":
-                return{
-                    ...state, user:{...state.user, username:action.payload}
-                }
-        case "SET_USER_AGE":
-                return{
-                     ...state, user:{...state.user, age:action.payload}
-                }
-        case "SET_USER_NAME":
-                return{
-                     ...state, user:{...state.user, name:action.payload}
-                } 
-        case "SET_USER_EMAIL":
-                return{
-                     ...state, user:{...state.user, email:action.payload}
-                } 
-        case "SET_USER_PHOTO":
-                return{
-                     ...state, user:{...state.user, photo:action.payload}
-                } 
-        case "SET_USER_DOB":
-                return{
-                    ...state, user:{...state.user, dob:action.payload}
-                } 
-        case "SET_USER_CITY_STATE":
-                return{
-                     ...state, user:{...state.user, city_state:action.payload}
-                } 
-        case "SET_USER_ABOUT_ME":
-                return{
-                     ...state, user:{...state.user, about_me:action.payload}
-                }   
-        case "SET_USER_SEX":
-                return{
-                     ...state, user:{...state.user, sex:action.payload}
-                }
-        case "SET_USER_ACTIVE":
-                return{
-                     ...state, user:{...state.user, active:action.payload}
-                 }
-        case "SET_USER_ID":
-            return{
-                ...state, user:{...state.user, id:action.payload}
-            }
         case "UPDATING_USER":
             return{
                     ...state, updatingUser: action.payload, errorUpdatingUser:false
@@ -148,6 +90,10 @@ function reducer(state = initialState, action){
         case "SET_ACTIVE_ITEM":
             return{
                 ...state, activeItem: action.payload
+            }
+        case "SET_INTERACTING_USER":
+            return{
+                ...state, interactingUser: action.payload 
             }
         default:
             return{
