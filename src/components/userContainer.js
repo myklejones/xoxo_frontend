@@ -8,22 +8,19 @@ import {Button} from 'semantic-ui-react'
  
 
 function UserContainer(props){
-    const {user, activeItem} = useSelector(state => state)
-    const token = useSelector(state => state.token)
-    const userData= useSelector(state => state.userData)
-    const uLoaded = useSelector(state => state.uLoaded)
+    const {userData, activeItem, uLoaded, allUsers, token} = useSelector(state => state)
     const [profile, setProfile] = useState(false)
-    const allUsers = useSelector(state => state.userData)
-    const dispatch = useDispatch()
-    const [edit, setEdit] = useState(false)
     const [viewUsers, setViewUsers] = useState(false)
+ 
+    const dispatch = useDispatch()
+   
 
 
     const outlog = () =>{
       props.history.push('/login')  
     }
     const users = () => {
-      props.history.push(`/${user.username}/users`)
+      props.history.push(`/${userData.username}/users`)
     }
    
     useEffect(()=>{
@@ -42,7 +39,7 @@ function UserContainer(props){
   }
 
   const editClicked = ()=>{
-    setEdit(!edit)
+    props.history.push(`/edit/${userData.username}`)
   }
 const viewProfileClicked = () =>{
      setProfile(!profile)
@@ -54,7 +51,7 @@ const viewUsersClicked=()=>{
 return(  
     <> 
     <User viewSelf={viewProfileClicked} props={props} showAll={profile} />
-            {edit ? <><EditUserForm  /><Button basic color="blue" onClick={editClicked}>Cancel</Button></> : <Button color="blue" onClick={editClicked}>Edit Profile</Button> }
+     <Button color="blue" onClick={editClicked}>Edit Profile</Button>
         </>
     )
 } 

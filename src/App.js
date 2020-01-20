@@ -8,8 +8,10 @@ import UserContainer from './components/userContainer'
 import AllUserContainer from './components/allUsersContainer.js'
 import { Menu, Header, Image} from 'semantic-ui-react'
 import MessageContainer from './components/MessageContainer'
+import Message from './components/messageTo'
 
 import * as actionCreator from './store/actions'
+import EditUserForm from './components/editUserForm';
 
 
 function App(props) {
@@ -100,10 +102,11 @@ console.log(myState )
     <Switch>
       <Route exact path="/login"   render={(routerProps)=><Login {...routerProps}  /> }    />
       <Route path="/signUp"   render={(routerProps)=><UserForm   {...routerProps}  /> }    />
-      <Route exact path={`/${userData.username}`}  render={(routerProps)=><UserContainer  {...routerProps}   /> }    />   
+      <Route exact path={`/${userData.username}`}  render={(routerProps)=><UserContainer  {...routerProps}   /> }    />  
+      <Route exact path={`/edit/${userData.username}`}  render={(routerProps)=><EditUserForm  {...routerProps}   /> }    />   
       <Route exact path={`/${userData.username}/users`}  render={(routerProps)=><AllUserContainer  {...routerProps}  /> }    />
       <Route exact path={`/${userData.username}/conversations`}  render={(routerProps)=><MessageContainer  {...routerProps}  /> }    />  
-      <Route exact path={`/${userData.username}/conversations/:id`}  render={(routerProps)=><MessageContainer  {...routerProps}  /> }    />   
+      <Route exact path={`/${userData.username}/conversations/:id`}  render={(routerProps)=><Message  {...routerProps}  /> }    />   
     </Switch>
     </>
   
