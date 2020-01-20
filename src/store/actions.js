@@ -2,7 +2,7 @@
     
 
 
-  export const token = (json) => {
+export const token = (json) => {
     return{
         type:"SET_TOKEN", payload: json
     }
@@ -47,13 +47,11 @@ export const gotToken = (username, password) => (dispatch) =>{
         }
     })
 }
-
 export const userLoading = (data) =>{
     return{
         type:"U_LOADING", payload: data
     }
 }
-
 export const userLoaded = (bool) =>{
     return{
         type:"U_LOADED", payload: bool
@@ -69,8 +67,6 @@ export const gotAllUser = (data) =>{
         type:"SET_ALL_USERS" , payload: data
     }
 }
-
-
 export const getUser = (token, id) => dispatch =>{  
     dispatch(tLoaded(false))
   
@@ -90,25 +86,17 @@ export const getUser = (token, id) => dispatch =>{
         dispatch(userLoading(false))  
     })
 } 
-
 export const updatingUser = (bool) =>{
-
     return{
         type:"UPDATING_USER" , payload: bool
     }
 }
-
-
 export const errorUpdatingUser = (error) =>{
-
     return{
         type:"ERROR_UPDATING_USER" , payload: error
     }
 }
-
-
 export const editUserProfile = (userinfo,token,id) => dispatch => {
-console.log(userinfo)
 dispatch(updatingUser(true))
     fetch(`http://localhost:3000/users/${id}`,{
         headers:{
@@ -130,28 +118,17 @@ dispatch(updatingUser(true))
             dispatch(gotUser(data.user))
         }
     })
-
 }
-
 export const newUserError = (data) =>{
-
     return{
         type:"NEW_USER_ERROR" , payload: data
     }
 }
-
-
-
 export const newUserCreated = (data) =>{
-
     return{
         type:"NEW_USER_CREATED" , payload: data
     }
 }
-
-
-
-
 export const newUser = (userinfo) => dispatch => {
    
         fetch(`http://localhost:3000/users`,{
@@ -176,15 +153,11 @@ export const newUser = (userinfo) => dispatch => {
         })
     
     }
-
-
 export const sendMessageLoading = (bool) =>{
-
-    return{
+ return{
         type:"SEND_MESSAGE_LOADING" , payload: bool
     }
 }
-
 export const sendMessageLoaded = (data) =>{
 
     return{
@@ -197,8 +170,7 @@ export const sendMessageError = (data) =>{
         type:"SEND_MESSAGE_ERROR" , payload: data
     }
 }
-
-    export const sendMessage = (message, token,sender_id, reciever_id)=>dispatch=>{
+export const sendMessage = (message, token,sender_id, reciever_id)=>dispatch=>{
         console.log(message, token,sender_id, reciever_id)
         dispatch(sendMessageLoading(true))
         fetch(`http://localhost:3000/conversations`,{
@@ -227,35 +199,39 @@ export const sendMessageError = (data) =>{
         })
     }
     
-    export const setActiveItem = (data) =>{
+export const setActiveItem = (data) =>{
         
         return{
             type:"SET_ACTIVE_ITEM" , payload: data
         }
     }
     
-    export const activeItemSetter = (data)=>dispatch=>{
+export const activeItemSetter = (data)=>dispatch=>{
         
         dispatch(setActiveItem(data))
     }
-                export const logout = (data = "home")=>dispatch=>{
+export const logout = (data = "home")=>dispatch=>{
                 
                     dispatch(userLoaded(false))
                     dispatch(setActiveItem(data))
                 }
-
-
-                export const userIsLoaded = (bool)=>dispatch=>{
+export const userIsLoaded = (bool)=>dispatch=>{
                     dispatch(userLoaded(bool))
                 }
-
-                export const setInteractingUser = (data)=>{
+export const setInteractingUser = (data)=>{
                     return{
                        type:"SET_INTERACTING_USER" , payload: data  
                     }
                 }
-
-                export const interactingUser = data => dispatch =>{
+export const interactingUser = data => dispatch =>{
                     dispatch(setInteractingUser(data))
 
                 }
+export const setOneUser = data =>{
+    return{
+        type: "SET_ONE_USER", payload: data
+    }
+}                
+export const oneUser = data => dispatch =>{
+    dispatch(setOneUser(data))
+}

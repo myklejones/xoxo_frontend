@@ -17,7 +17,8 @@ sendMessageLoading: false,
 sendMessageLoaded: {},
 sendMessageError: {},
 activeItem:"",
-interactingUser:{}
+interactingUser:{},
+oneUser:false
 }
 
 function reducer(state = initialState, action){
@@ -94,6 +95,10 @@ function reducer(state = initialState, action){
         case "SET_INTERACTING_USER":
             return{
                 ...state, interactingUser: action.payload 
+            }
+        case "SET_ONE_USER":
+            return{
+                ...state, oneUser: action.payload
             }
         default:
             return{

@@ -66,7 +66,7 @@ console.log(myState )
           onClick={handleClick}
           icon='envelope'
           as={Link}
-          to={`/${userData.username}/messages`}
+          to={`/${userData.username}/conversations`}
 
         />
         <Menu.Item
@@ -102,7 +102,8 @@ console.log(myState )
       <Route path="/signUp"   render={(routerProps)=><UserForm   {...routerProps}  /> }    />
       <Route exact path={`/${userData.username}`}  render={(routerProps)=><UserContainer  {...routerProps}   /> }    />   
       <Route exact path={`/${userData.username}/users`}  render={(routerProps)=><AllUserContainer  {...routerProps}  /> }    />
-      <Route exact path={`/${userData.username}/messages`}  render={(routerProps)=><MessageContainer  {...routerProps}  /> }    />   
+      <Route exact path={`/${userData.username}/conversations`}  render={(routerProps)=><MessageContainer  {...routerProps}  /> }    />  
+      <Route exact path={`/${userData.username}/conversations/:id`}  render={(routerProps)=><MessageContainer  {...routerProps}  /> }    />   
     </Switch>
     </>
   
