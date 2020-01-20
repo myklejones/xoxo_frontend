@@ -74,9 +74,9 @@ function AllUsersContainer(props){
                                            </Header>
                                            {theUser.body_type}
                                         </Container>
-                                       {messageForUser ? <Form>
+                                       {messageForUser ? <Form onSubmit={sendMeesageToUser} >
                                              <TextArea onChange={messageInput} style={{ minHeight: 100 }} />
-                                             <Button basic color='red' onSubmit={sendMeesageToUser} > Send</Button>
+                                             <Button basic color='red'  type='submit' > Send</Button>
                                          </Form> : null } 
                                 <Button.Group attached='bottom' > 
                                     <Button basic color='blue' onClick={messageUserclicked} > Message </Button>
