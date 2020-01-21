@@ -114,8 +114,8 @@ dispatch(updatingUser(true))
             console.log(data)
          dispatch(errorUpdatingUser(data))   
         }else{
-            dispatch(updatingUser(false))
             dispatch(gotUser(data.user))
+            dispatch(updatingUser(false))
         }
     })
 }
