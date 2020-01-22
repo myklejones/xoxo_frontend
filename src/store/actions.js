@@ -189,7 +189,8 @@ export const sendMessage = (message, token,sender_id, reciever_id)=>dispatch=>{
                 message:{
                     user_id: sender_id, 
                     body: message,
-                    read: false   
+                    read: false, 
+                    message_reciever_id: reciever_id
                 }
                 
             })

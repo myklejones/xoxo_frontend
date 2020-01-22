@@ -26,7 +26,7 @@ function App(props) {
     localStorage.token = token
     localStorage.loggedInUserId = id 
   }
-console.log(myState )
+console.log(myState)
   const handleClick = (evt, {name})=>{
     
     

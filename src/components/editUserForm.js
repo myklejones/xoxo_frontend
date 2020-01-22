@@ -70,6 +70,7 @@ function EditUserForm(props){
 
     }
     dispatch(actionCreator.editUserProfile(updateInfo, localStorage.token, localStorage.loggedInUserId))
+    props.history.push(`/${username}`)
     
   }
 console.log(lastName)
