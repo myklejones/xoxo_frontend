@@ -40,7 +40,6 @@ export const gotToken = (username, password) => (dispatch) =>{
        if(res.errors ){ 
            dispatch(tError(res.errors))
         }else{
-    
           dispatch(token(res.token))
           dispatch(gotId(res.user_id))
           dispatch(tLoaded(true))
@@ -67,6 +66,16 @@ export const gotAllUser = (data) =>{
         type:"SET_ALL_USERS" , payload: data
     }
 }
+export const gotMessages =(data) =>{
+    return{
+        type:"SET_MESSAGES", payload: data
+    }
+}
+export const gotConversations =(data) =>{
+    return{
+        type:"SET_CONVERSATIONS", payload: data
+    }
+}
 export const getUser = (token, id) => dispatch =>{  
     dispatch(tLoaded(false))
   
@@ -79,9 +88,12 @@ export const getUser = (token, id) => dispatch =>{
     })
     .then(res => res.json())
     .then(res =>{
-        debugger
+        console.log(id)
+    
         dispatch(gotUser(res.user.data.attributes))
         dispatch(gotAllUser(res.all_users))
+        dispatch(gotMessages(res.messages))
+        dispatch(gotConversations(res.conversations))
         dispatch(userLoaded(true))
         dispatch(userLoading(false))  
     })
@@ -189,8 +201,7 @@ export const sendMessage = (message, token,sender_id, reciever_id)=>dispatch=>{
                 message:{
                     user_id: sender_id, 
                     body: message,
-                    read: false, 
-                    message_reciever_id: reciever_id
+                    read: false
                 }
                 
             })
@@ -235,4 +246,16 @@ export const setOneUser = data =>{
 }                
 export const oneUser = data => dispatch =>{
     dispatch(setOneUser(data))
+}
+export const convos = token => dispatch =>{
+    fetch(`http://localhost:3000/conversations`,{
+        headers:{
+            Accepts: 'application/json',
+            'Content-type' : 'application/json',
+            "Authorization": token
+        }
+    }).then(res=>res.json())
+    .then(res => {
+        console.log(res)
+    })
 }

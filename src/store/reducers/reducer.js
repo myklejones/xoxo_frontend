@@ -18,12 +18,22 @@ sendMessageLoaded: {},
 sendMessageError: {},
 activeItem:"",
 interactingUser:{},
-oneUser:false
+oneUser:false,
+userMessages:{},
+userConversations:{}
 }
 
 function reducer(state = initialState, action){
 
     switch(action.type){
+        case "SET_MESSAGES":
+            return{
+                ...state, userMessages: action.payload
+            }
+        case "SET_CONVERSATIONS":
+            return{
+                ...state, userConversations: action.payload
+            }
         case "SET_TOKEN":
             return{
                 ...state, 

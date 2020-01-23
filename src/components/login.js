@@ -5,6 +5,7 @@ import * as actionCreator from '../store/actions'
 function Login(props) {
   const [password, setPassword] = useState("")
   const [ausername, setaUsername] = useState("")
+  const [tog,setTog] = useState(false)
   const dispatch = useDispatch()
   const {token,userData,username,id,tLoaded,tError,uLoaded,uLoading} = useSelector(state=>state)
  
@@ -26,6 +27,7 @@ function Login(props) {
             const loginSubmit = async (evt) =>{
               evt.preventDefault() 
               console.log("login clicked")
+              
               dispatch(actionCreator.gotToken( ausername, password))  
                 
             }
@@ -33,6 +35,7 @@ function Login(props) {
             // console.log(lo)
 
     const getUser = (token,id) =>{
+      debugger
         dispatch(actionCreator.getUser(token, id)) 
     }
 
@@ -42,6 +45,11 @@ function Login(props) {
     console.log(uLoading)
     
     
+
+    if(localStorage.token && !tog){
+      setTog(true)
+      getUser(localStorage.token,localStorage.loggedInUserId)
+    }
     if(tLoaded){
       getUser(token, id)  
     }else if(uLoaded){
@@ -52,7 +60,7 @@ function Login(props) {
     },[])
 
 
-
+console.log(token,id)
     return(
             <>
            <div class="ui inverted segment blue">
