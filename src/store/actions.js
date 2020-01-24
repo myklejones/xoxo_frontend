@@ -76,20 +76,23 @@ export const gotConversations =(data) =>{
         type:"SET_CONVERSATIONS", payload: data
     }
 }
-export const getUser = (token, id) => dispatch =>{  
+export const getUser = (ttoken, id) => dispatch =>{  
     dispatch(tLoaded(false))
   
     fetch(`http://localhost:3000/users/${id}`,{
         headers:{
             Accepts: 'application/json',
             'Content-type' : 'application/json',
-            "Authorization": token
+            "Authorization": ttoken
         } 
     })
     .then(res => res.json())
     .then(res =>{
         console.log(id)
-    
+        localStorage.token = ttoken
+        localStorage.loggedInUserId = id 
+        dispatch(token(ttoken))
+        dispatch(gotId(id))
         dispatch(gotUser(res.user.data.attributes))
         dispatch(gotAllUser(res.all_users))
         dispatch(gotMessages(res.messages))

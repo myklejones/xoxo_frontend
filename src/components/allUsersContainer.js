@@ -1,7 +1,7 @@
 import React,{useState, useEffect} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 import * as actionCreator from '../store/actions'
-import AUser from './aUser'
+import AUser from './ASinlgleUser'
 import {Form, TextArea, Header, Card, Grid, Image,Container, Button} from 'semantic-ui-react'
 
 function AllUsersContainer(props){
@@ -20,60 +20,11 @@ function AllUsersContainer(props){
             let selectedUserId =  parseInt(evt.target.parentElement.id)
             const filteredUser = allUsers.find((idNum)=>{return(idNum.id === selectedUserId)})
             dispatch(actionCreator.interactingUser(filteredUser))
-            dispatch(actionCreator.oneUser(!oneUser))
-        }
-        const showOtherUsers = (evt) =>{
-            dispatch(actionCreator.interactingUser({})) 
-            dispatch(actionCreator.oneUser(!oneUser))
-        }
-        const messageUserclicked = ()=>{
-            props.history.push(`/${userData.username}/conversations/${interactingUser.id}`)
-
+            props.history.push(`${userData.username}/users/userProfile`)
         }
         
-       const showOneUser = () => {
-           return(
-                <>
-                                            <Image src={interactingUser.photo} 
-                                            
-                                              size='medium'
-                                              attached='top'
-                                              
-                                              />
-                                        <Header as='h1'  attached >
-                                            {interactingUser.username}, {interactingUser.age}
-                                        </Header>
-                                        <Container fluid > 
-                                           <Header as='h3' >
-                                                City/state
-                                           </Header>
-                                           {interactingUser.city_state}
-                                           <Header as='h3' >
-                                                Occupation
-                                           </Header>
-                                           {interactingUser.profession}
-                                           <Header as='h3' >
-                                                About me
-                                           </Header>
-                                           {interactingUser.about_me}
-                                           <Header as='h3' >
-                                                Interested in
-                                           </Header>
-                                           {interactingUser.interest}
-                                           <Header as='h3' >
-                                                Body Type
-                                           </Header>
-                                           {interactingUser.body_type}
-                                        </Container>
-                                <Button.Group attached='bottom' > 
-                                    <Button basic color='blue' onClick={messageUserclicked} > Message </Button>
-                                    <Button basic color='teal' onClick={showOtherUsers} > Other Users </Button>
-                                </Button.Group>
-                                    
-                </>
-            )
-       }
-        const showUsers = () =>{
+     
+      
             return(
                 <>
           
@@ -92,17 +43,7 @@ function AllUsersContainer(props){
   
                 </Card.Group>
                 </>
-            )}
-return(
-    <>
-    
+            )
 
-   
-    {oneUser ? showOneUser() : showUsers()}
-  
- {/* {props.users.filter(us => us.id !== parseInt(localStorage.loggedInUserId)).map(user=><AUser aUser={user} />)} */}
-   
-    </>
-)
 }
 export default AllUsersContainer

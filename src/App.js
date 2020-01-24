@@ -9,6 +9,8 @@ import AllUserContainer from './components/allUsersContainer.js'
 import { Menu, Header, Image} from 'semantic-ui-react'
 import MessageContainer from './components/MessageContainer'
 import Message from './components/messageTo'
+import AUser from './components/ASinlgleUser'
+
 
 import * as actionCreator from './store/actions'
 import EditUserForm from './components/editUserForm';
@@ -45,7 +47,7 @@ console.log(myState)
   
  
   const header = () =>{
-    gotToken(token,id)
+   
     return (<>
    
      <Menu color='blue'  >
@@ -105,6 +107,7 @@ console.log(myState)
       <Route exact path={`/${userData.username}`}  render={(routerProps)=><UserContainer  {...routerProps}   /> }    />  
       <Route exact path={`/edit/${userData.username}`}  render={(routerProps)=><EditUserForm  {...routerProps}   /> }    />   
       <Route exact path={`/${userData.username}/users`}  render={(routerProps)=><AllUserContainer  {...routerProps}  /> }    />
+      <Route exact path={`/${userData.username}/users/userProfile`}  render={(routerProps)=><AUser  {...routerProps}  /> }    />
       <Route exact path={`/${userData.username}/conversations`}  render={(routerProps)=><MessageContainer  {...routerProps}  /> }    />  
       <Route exact path={`/${userData.username}/conversations/:id`}  render={(routerProps)=><Message  {...routerProps}  /> }    />   
     </Switch>

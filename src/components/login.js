@@ -35,7 +35,6 @@ function Login(props) {
             // console.log(lo)
 
     const getUser = (token,id) =>{
-      debugger
         dispatch(actionCreator.getUser(token, id)) 
     }
 
