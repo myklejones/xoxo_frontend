@@ -19,7 +19,7 @@ import EditUserForm from './components/editUserForm';
 function App(props) {
   
  
-  const {uLoaded, id,token,userData,user,activeItem, allUsers } = useSelector(state => state)
+  const {uLoaded, id,token,userData,user,activeItem, allUsers , interactingUser} = useSelector(state => state)
   const myState = useSelector(state => state)
   const dispatch = useDispatch()
   const [activeItemSel, setActiveItemSel] = useState("home")
@@ -107,7 +107,8 @@ console.log(myState)
       <Route exact path={`/${userData.username}`}  render={(routerProps)=><UserContainer  {...routerProps}   /> }    />  
       <Route exact path={`/edit/${userData.username}`}  render={(routerProps)=><EditUserForm  {...routerProps}   /> }    />   
       <Route exact path={`/${userData.username}/users`}  render={(routerProps)=><AllUserContainer  {...routerProps}  /> }    />
-      <Route exact path={`/${userData.username}/users/userProfile`}  render={(routerProps)=><AUser  {...routerProps}  /> }    />
+      <Route exact path={`/profile`}  render={(routerProps)=><AUser  {...routerProps}  /> }    />
+      <Route exact path={`/${userData.username}/users/${interactingUser.username}`}  render={(routerProps)=><AUser  {...routerProps}  /> }    />
       <Route exact path={`/${userData.username}/conversations`}  render={(routerProps)=><MessageContainer  {...routerProps}  /> }    />  
       <Route exact path={`/${userData.username}/conversations/:id`}  render={(routerProps)=><Message  {...routerProps}  /> }    />   
     </Switch>

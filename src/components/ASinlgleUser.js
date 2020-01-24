@@ -52,10 +52,11 @@ console.log(interactingUser)
       </Header>
         {interactingUser.body_type}
     </Container>
-    <Button.Group attached='bottom' > 
+    {interactingUser.id === userData.id ? null :  <Button.Group attached='bottom' > 
       <Button basic color='blue' onClick={messageUserclicked} > Message </Button>
       <Button basic color='teal' onClick={showOtherUsers} > Other Users </Button>
-    </Button.Group>
+    </Button.Group> }
+  
 
 </>
   )

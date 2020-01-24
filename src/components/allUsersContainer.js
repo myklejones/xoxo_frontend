@@ -20,7 +20,7 @@ function AllUsersContainer(props){
             let selectedUserId =  parseInt(evt.target.parentElement.id)
             const filteredUser = allUsers.find((idNum)=>{return(idNum.id === selectedUserId)})
             dispatch(actionCreator.interactingUser(filteredUser))
-            props.history.push(`${userData.username}/users/userProfile`)
+            props.history.push(`users/${filteredUser.username}`)
         }
         
      
