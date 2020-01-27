@@ -1,7 +1,7 @@
 import React,{useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux'
 import * as actionCreator from '../store/actions';
-import {Image, Header} from 'semantic-ui-react'
+import {Image, Header,Label, Icon} from 'semantic-ui-react'
 import { editUserProfile } from '../store/actions';
 
 
@@ -9,15 +9,22 @@ import { editUserProfile } from '../store/actions';
 function User({props}){
     
     
-    const {userData} = useSelector(state => state)
+    const {userData, userConversations} = useSelector(state => state)
     const dispatch = useDispatch()
     const error = useSelector(state => state.errorUpdatingUser)
     console.log(props)
    
     const editUserProfile =(evt)=>{
+        console.log(userConversations)
+
+        debugger
         dispatch(actionCreator.interactingUser(userData))
         props.history.push(`/profile`)
         
+    }
+
+    if(userData.photo.length < 2 && userData.about_me.length < 2 ){
+        props.history.push(`/edit/${userData.username}`)
     }
     return(
         <>
@@ -31,7 +38,11 @@ function User({props}){
             <Header as='h1'   attached >
                 {userData.username}, {userData.age}
             </Header>
-        
+            {/* <Label>
+        <Icon name='mail' />
+            23
+         <Label.Detail>View Mail</Label.Detail>
+            </Label> */}
         </>
     )
 } 

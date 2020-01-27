@@ -20,12 +20,22 @@ activeItem:"",
 interactingUser:{},
 oneUser:false,
 userMessages:{},
-userConversations:{}
+userConversations:{},
+messageLoading: false,
+interactingConvo:{}
 }
 
 function reducer(state = initialState, action){
 
     switch(action.type){
+        case "SET_INTERACTING_CONVERSATION":
+            return{
+                ...state, interactingConvo:action.payload
+            }
+        case "SET_MESSAGE_LOADING":
+            return{
+                ...state, messageLoading:action.payload
+            }
         case "SET_MESSAGES":
             return{
                 ...state, userMessages: action.payload

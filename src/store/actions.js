@@ -37,10 +37,10 @@ export const gotToken = (username, password) => (dispatch) =>{
     })
     .then(res=>res.json())
     .then((res) =>{
-       if(res.errors ){ 
-           dispatch(tError(res.errors))
+        if(res.errors ){ 
+            dispatch(tError(res.errors))
         }else{
-          dispatch(token(res.token))
+            dispatch(token(res.token))
           dispatch(gotId(res.user_id))
           dispatch(tLoaded(true))
         }
@@ -78,7 +78,7 @@ export const gotConversations =(data) =>{
 }
 export const getUser = (ttoken, id) => dispatch =>{  
     dispatch(tLoaded(false))
-  
+    
     fetch(`http://localhost:3000/users/${id}`,{
         headers:{
             Accepts: 'application/json',
@@ -88,15 +88,14 @@ export const getUser = (ttoken, id) => dispatch =>{
     })
     .then(res => res.json())
     .then(res =>{
-        console.log(id)
+        console.log(res)
         localStorage.token = ttoken
         localStorage.loggedInUserId = id 
         dispatch(token(ttoken))
         dispatch(gotId(id))
         dispatch(gotUser(res.user.data.attributes))
         dispatch(gotAllUser(res.all_users))
-        dispatch(gotMessages(res.messages))
-        dispatch(gotConversations(res.conversations))
+        dispatch(gotConversations(res.conversations.data))
         dispatch(userLoaded(true))
         dispatch(userLoading(false))  
     })
@@ -113,7 +112,7 @@ export const errorUpdatingUser = (error) =>{
 }
 export const editUserProfile = (userinfo,token,id) => dispatch => {
 dispatch(updatingUser(true))
-    fetch(`http://localhost:3000/users/${id}`,{
+fetch(`http://localhost:3000/users/${id}`,{
         headers:{
             Accepts: 'application/json',
             'Content-type' : 'application/json',
@@ -146,30 +145,30 @@ export const newUserCreated = (data) =>{
 }
 export const newUser = (userinfo) => dispatch => {
    
-        fetch(`http://localhost:3000/users`,{
-            headers:{
-                Accepts: 'application/json',
-                'Content-type' : 'application/json',
-                
-            },
-            method: "POST",
-            body: JSON.stringify(userinfo)
-        })
-        .then(res => res.json())
-        .then(data =>{
-            console.log(data)
-            if(data.errors){
-                dispatch(newUserError(data))
-            }else{
-                dispatch(newUserCreated(true))
-
-            }
+    fetch(`http://localhost:3000/users`,{
+        headers:{
+            Accepts: 'application/json',
+            'Content-type' : 'application/json',
+            
+        },
+        method: "POST",
+        body: JSON.stringify(userinfo)
+    })
+    .then(res => res.json())
+    .then(data =>{
+        console.log(data)
+        if(data.errors){
+            dispatch(newUserError(data))
+        }else{
+            dispatch(newUserCreated(true))
+            
+        }
            
-        })
+    })
     
-    }
+}
 export const sendMessageLoading = (bool) =>{
- return{
+    return{
         type:"SEND_MESSAGE_LOADING" , payload: bool
     }
 }
@@ -180,13 +179,13 @@ export const sendMessageLoaded = (data) =>{
     }
 }
 export const sendMessageError = (data) =>{
-
+    
     return{
         type:"SEND_MESSAGE_ERROR" , payload: data
     }
 }
 export const sendMessage = (message, token,sender_id, reciever_id)=>dispatch=>{
-        console.log(message, token,sender_id, reciever_id)
+    console.log(message, token,sender_id, reciever_id)
         dispatch(sendMessageLoading(true))
         fetch(`http://localhost:3000/conversations`,{
             headers:{
@@ -196,7 +195,7 @@ export const sendMessage = (message, token,sender_id, reciever_id)=>dispatch=>{
             },
             method: "POST",
             body: JSON.stringify({
-               
+                
                 conversation:{
                     sender_id: sender_id,
                     recipient_id: reciever_id
@@ -214,35 +213,35 @@ export const sendMessage = (message, token,sender_id, reciever_id)=>dispatch=>{
         })
     }
     
-export const setActiveItem = (data) =>{
+    export const setActiveItem = (data) =>{
         
         return{
             type:"SET_ACTIVE_ITEM" , payload: data
         }
     }
     
-export const activeItemSetter = (data)=>dispatch=>{
+    export const activeItemSetter = (data)=>dispatch=>{
         
         dispatch(setActiveItem(data))
     }
-export const logout = (data = "home")=>dispatch=>{
-                
-                    dispatch(userLoaded(false))
-                    dispatch(setActiveItem(data))
+    export const logout = (data = "home")=>dispatch=>{
+        
+        dispatch(userLoaded(false))
+        dispatch(setActiveItem(data))
                 }
-export const userIsLoaded = (bool)=>dispatch=>{
+    export const userIsLoaded = (bool)=>dispatch=>{
                     dispatch(userLoaded(bool))
                 }
-export const setInteractingUser = (data)=>{
+    export const setInteractingUser = (data)=>{
                     return{
-                       type:"SET_INTERACTING_USER" , payload: data  
+                        type:"SET_INTERACTING_USER" , payload: data  
                     }
                 }
-export const interactingUser = data => dispatch =>{
+    export const interactingUser = data => dispatch =>{
                     dispatch(setInteractingUser(data))
-
+                    
                 }
-export const setOneUser = data =>{
+    export const setOneUser = data =>{
     return{
         type: "SET_ONE_USER", payload: data
     }
@@ -250,7 +249,13 @@ export const setOneUser = data =>{
 export const oneUser = data => dispatch =>{
     dispatch(setOneUser(data))
 }
+export const userMessageIsLoading = data=>{
+    return{
+        type: "SET_MESSAGE_LOADING", payload: data
+    }
+}
 export const convos = token => dispatch =>{
+    dispatch(userMessageIsLoading(true))
     fetch(`http://localhost:3000/conversations`,{
         headers:{
             Accepts: 'application/json',
@@ -260,5 +265,29 @@ export const convos = token => dispatch =>{
     }).then(res=>res.json())
     .then(res => {
         console.log(res)
+        dispatch(userMessageIsLoading(false))
     })
+}
+
+export const deleteMessage = (messageId,token) => dispatch =>{
+    fetch(`http://localhost:3000/messages/${messageId}`,{
+        headers:{
+            Accepts: 'application/json',
+            'Content-type' : 'application/json',
+            "Authorization": token
+        },
+        method: "DELETE"
+    }).then(r => r.json())
+    .then(res => {
+        console.log(res)
+    })
+    
+}
+export const setInteractingConversation = (data)=>{
+    return{
+        type:"SET_INTERACTING_CONVERSATION", payload: data
+    }
+}
+export const interactingConvo = (data)=>dispatch=>{
+    dispatch(setInteractingUser(data))
 }

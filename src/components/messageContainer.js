@@ -3,6 +3,7 @@ import {useSelector, useDispatch} from 'react-redux'
 import {Button, Input,Image , Segment, Card ,Form, Header, Grid, List} from 'semantic-ui-react'
 import * as actionCreator from '../store/actions'
 import AllUsers from './ASinlgleUser';
+import User from './user';
 
 
 function MessageContainer(props){
@@ -25,16 +26,31 @@ function MessageContainer(props){
         dispatch(actionCreator.interactingUser(userToBeSet))
         props.history.push(`/${userData.username}/users/${userToBeSet.username}`)
     }
+
     const messageClicked = evt =>{
-        console.log("message clicked")
+        let selectedId = parseInt(evt.target.parentElement.id)
+        const userToBeSet = allUsers.find(u => u.id === selectedId)
+
+        dispatch(actionCreator.interactingUser(userToBeSet))
+        props.history.push(`/${userData.username}/conversations/${interactingUser.id}`)
     }
     const searchInput =(evt)=>{
         setSearchinput(evt.target.value)
       
     }
-    console.log(searchinput)
-  
-    return(
+    const dubClickConvo =(evt)=>{
+    }
+
+
+   for(let i = 0; i<userConversations.length; i++){
+            userConversations[i].attributes.messages.reverse()
+    }
+    const sortedConvos = userConversations.sort((a,b)=>{
+       return a.attributes.messages[0].updated_at - b.attributes.messages[0].updated_at
+    })
+
+    debugger
+    return( 
         <>
           <Input
     onChange={searchInput}
@@ -42,63 +58,40 @@ function MessageContainer(props){
     iconPosition='left'
     placeholder='Search...'
   />
+
       <List>
-            {userConversations.map(c=>{
-                if(c.sender_id === userData.id){
-                    // let thisOne = allUsers.filter(u => u.username === searchi)
-                    
-                    let thisOne = allUsers.find(u=> u.id === c.recipient_id)
-                    let thisOneLastMessage = userMessages.filter(m => m.conversation_id === c.id )
-                    let lastMessage = thisOneLastMessage.pop()
+       {sortedConvos.map(c=>{
+           if(c.attributes.sender_id  === userData.id){
+               let a_user = allUsers.find(u=>{return u.id === c.attributes.recipient_id })
+                return(
+                <List.Item id={c.id} onDoubleClick={dubClickConvo} >
+                         <Image id={a_user.id} onClick={imageClicked} size='mini' circular src={a_user.photo} /> 
+                        <List.Content id={a_user.id} onClick={messageClicked} >
+                            <List.Header>{a_user.username}</List.Header>
+                            <List.Description>RE: {c.attributes.messages[0].body}   </List.Description>    
+                        </List.Content>
+                    </List.Item>
+           )
+           }else if(c.attributes.recipient_id  === userData.id){
+                  let a_user = allUsers.find(u=>{return u.id === c.attributes.sender_id })
+                return(
+                <List.Item id={c.id} onDoubleClick={dubClickConvo} >
+                         <Image id={a_user.id} onClick={imageClicked} size='mini' circular src={a_user.photo} /> 
+                        <List.Content id={a_user.id} onClick={messageClicked} >
+                            <List.Header>{a_user.username}</List.Header>
+                            <List.Description>RE: {c.attributes.messages[0].body}   </List.Description>    
+                        </List.Content>
+                    </List.Item>)
+           }
+          
 
-
-
-                    
-                    if(searchinput.length > 0 && thisOne.username.toUpperCase().startsWith(searchinput.toUpperCase())){
-                        return(
-                        <List.Item>
-                             <Image id={thisOne.id} onClick={imageClicked} size='mini' circular src={thisOne.photo} /> 
-                            <List.Content id={thisOne.id} onClick={messageClicked} >
-                                <List.Header>{thisOne.username}</List.Header>
-                                <List.Description>RE: {lastMessage.body}   </List.Description>    
-                            </List.Content>
-                        </List.Item>
-                          
-                    ) 
-                    }else if(searchinput.length === 0 ){
-                        return(
-                            <List.Item>
-                            <Image id={thisOne.id} onClick={imageClicked} size='mini' circular src={thisOne.photo} /> 
-                           <List.Content id={thisOne.id} onClick={messageClicked} >
-                               <List.Header>{thisOne.username}</List.Header>
-                               <List.Description>RE: {lastMessage.body}   </List.Description>    
-                           </List.Content>
-                       </List.Item>
-                        )
-                    }
-                   
-                }else if (c.recipient_id === userData.id){
-                    let thisOne = allUsers.find(u=> u.id === c.sender_id)
-                    let thisOneLastMessage = userMessages.filter(m => m.conversation_id === c.id )
-                    let lastMessage = thisOneLastMessage.pop()
-                    return(
-                        <List.Item>
-                             <Image id={thisOne.id} onClick={imageClicked} size='mini' circular src={thisOne.photo} /> 
-                            <List.Content id={thisOne.id} onClick={messageClicked} >
-                                <List.Header>{thisOne.username}</List.Header>
-                                <List.Description>RE: {lastMessage.body}   </List.Description>    
-                            </List.Content>
-                        </List.Item>
-                          
-                    ) }
-                
-            })
-        }  
+       })}
+        
       </List>
            
      
     
-         
+               
 
        
         

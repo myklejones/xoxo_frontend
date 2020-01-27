@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState, useEffect} from 'react';
 import { Route, Switch} from 'react-router'
 import { Link} from 'react-router-dom'
 import Login from './components/login'
@@ -19,11 +19,11 @@ import EditUserForm from './components/editUserForm';
 function App(props) {
   
  
-  const {uLoaded, id,token,userData,user,activeItem, allUsers , interactingUser} = useSelector(state => state)
+  const {uLoaded, id,token,userData,user,activeItem, allUsers , interactingUser, messageLoading} = useSelector(state => state)
   const myState = useSelector(state => state)
   const dispatch = useDispatch()
   const [activeItemSel, setActiveItemSel] = useState("home")
-
+  // useEffect(()=>{dispatch(actionCreator.getUser(localStorage.token, localStorage.loggedInUserId))},[messageLoading])
   const gotToken = () =>{
     localStorage.token = token
     localStorage.loggedInUserId = id 
