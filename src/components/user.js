@@ -15,15 +15,12 @@ function User({props}){
     console.log(props)
    
     const editUserProfile =(evt)=>{
-        console.log(userConversations)
-
-        debugger
         dispatch(actionCreator.interactingUser(userData))
         props.history.push(`/profile`)
         
     }
 
-    if(userData.photo.length < 2 && userData.about_me.length < 2 ){
+    if(!userData.photo && !userData.about_me){
         props.history.push(`/edit/${userData.username}`)
     }
     return(

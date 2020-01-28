@@ -4,7 +4,7 @@ import * as actionCreator from '../store/actions'
 import {Image, Form, Button, Icon,Comment, Header, Modal, Sticky, List, Label} from 'semantic-ui-react'
 
 function MessageTo({}){
-    const {interactingUser, userData, userMessages, userConversations, messageLoading} = useSelector(state => state)
+    const {interactingUser, userData, userMessages, userConversations, messageLoading, interactingConvo} = useSelector(state => state)
     const [message, setMessage] = useState('')
     const [clickedTwice, setClickedTwice] = useState(false)
     const [messageId, setMessageId] = useState(null)
@@ -29,7 +29,7 @@ function MessageTo({}){
                 break;
         }}
     
-   console.log(messageId)
+  
 
         const filteredConvos = userConversations.filter(c => c.sender_id &&c.recipient_id == interactingUser.id)
         // const filterdMessages = userMessages.filter(m => {return(m.conversation_id == filteredConvos[0].id )})
@@ -69,24 +69,25 @@ function MessageTo({}){
             </>
         )
     }
+    
+  
 return(
     <>
     <List>
-    {filteredConvos[0] ?  userMessages.filter(m => {return(m.conversation_id == filteredConvos[0].id )}).map(m =>{
-        if(m.user_id === interactingUser.id){
-            return(
+
+        {interactingConvo.id ? interactingConvo.attributes.messages.map(m=>{
+           if(m.user_id === parseInt(interactingUser.id)){
+               return(
                 <List.Item >
                     <Image src={interactingUser.photo} floated='left'  size='mini' circular />
                     <List.Content>
                         <List.Description> {m.body}</List.Description>
                     </List.Content>
-
-
                  </List.Item>    
-            )
-        }else if(m.user_id === userData.id){
-            return(
-                <List.Item >
+               )
+           }else if(m.user_id === userData.id){
+                return(
+                    <List.Item >
                     <Image src={userData.photo} floated='right'  size='mini' circular />
                     <List.Content id={m.id} onDoubleClick={DoubleClick} floated='right' >
                         <List.Description> {m.body} </List.Description>
@@ -94,20 +95,17 @@ return(
                             clickedTwice && m.id === messageId ? doubleClickOptions() : null
                         }
                     </List.Content>
-
                 </List.Item>    
-            )
-        }
-    }) : null}
-       
+                )
+           }
+        }): null}  
     </List>
-  <Sticky>
-   <Form id={interactingUser.id} onSubmit={messageFormsubmit} >
-      <Form.TextArea name ='messageTyped' value={message} onChange={messageInput} />
-      <Button type='submit' content='Send' labelPosition='left' icon='edit' primary />
-    </Form>   
-  </Sticky>
-  
+    <Sticky>
+        <Form id={interactingUser.id} onSubmit={messageFormsubmit} >
+            <Form.TextArea name ='messageTyped' value={message} onChange={messageInput} />
+            <Button type='submit' content='Send' labelPosition='left' icon='edit' primary />
+        </Form>   
+    </Sticky>  
     </>
 )
 }

@@ -17,7 +17,9 @@ sendMessageLoading: false,
 sendMessageLoaded: {},
 sendMessageError: {},
 activeItem:"",
-interactingUser:{},
+interactingUser:{
+    username:""
+},
 oneUser:false,
 userMessages:{},
 userConversations:{},

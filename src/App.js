@@ -104,10 +104,10 @@ console.log(myState)
     <Switch>
       <Route exact path="/login"   render={(routerProps)=><Login {...routerProps}  /> }    />
       <Route path="/signUp"   render={(routerProps)=><UserForm   {...routerProps}  /> }    />
+      <Route exact path={`/profile`}  render={(routerProps)=><AUser  {...routerProps}  /> }    />
       <Route exact path={`/${userData.username}`}  render={(routerProps)=><UserContainer  {...routerProps}   /> }    />  
       <Route exact path={`/edit/${userData.username}`}  render={(routerProps)=><EditUserForm  {...routerProps}   /> }    />   
       <Route exact path={`/${userData.username}/users`}  render={(routerProps)=><AllUserContainer  {...routerProps}  /> }    />
-      <Route exact path={`/profile`}  render={(routerProps)=><AUser  {...routerProps}  /> }    />
       <Route exact path={`/${userData.username}/users/${interactingUser.username}`}  render={(routerProps)=><AUser  {...routerProps}  /> }    />
       <Route exact path={`/${userData.username}/conversations`}  render={(routerProps)=><MessageContainer  {...routerProps}  /> }    />  
       <Route exact path={`/${userData.username}/conversations/:id`}  render={(routerProps)=><Message  {...routerProps}  /> }    />   

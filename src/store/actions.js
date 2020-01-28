@@ -76,6 +76,11 @@ export const gotConversations =(data) =>{
         type:"SET_CONVERSATIONS", payload: data
     }
 }
+export const setInteractingConversation = (data)=>{
+    return{
+        type:"SET_INTERACTING_CONVERSATION", payload: data
+    }
+}
 export const getUser = (ttoken, id) => dispatch =>{  
     dispatch(tLoaded(false))
     
@@ -283,11 +288,7 @@ export const deleteMessage = (messageId,token) => dispatch =>{
     })
     
 }
-export const setInteractingConversation = (data)=>{
-    return{
-        type:"SET_INTERACTING_CONVERSATION", payload: data
-    }
-}
+
 export const interactingConvo = (data)=>dispatch=>{
-    dispatch(setInteractingUser(data))
+    dispatch(setInteractingConversation(data))
 }

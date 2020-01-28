@@ -21,8 +21,9 @@ function UserForm(props){
         const [lastName, setLastName] = useState("")
         const [firstName, setFirstName] = useState("")
 const formInput= (evt)=>{
+    console.log(evt.target.name)
     switch(evt.target.name){
-        case "username":
+        case 'username':
            setUsername(evt.target.value)
            break;
         case "password":
@@ -90,7 +91,15 @@ return(
               type='text'
               />
             </Form.Group>
-            <Form.Input label='Username' placeholder='Username' type='text' />
+
+            <Form.Input 
+            label='Username'
+             name='username'
+              placeholder='Username' 
+              type='text'
+              onChange = {formInput}
+               />
+
             <Form.Input 
             id="password"
             label='Password' 

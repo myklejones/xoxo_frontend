@@ -21,6 +21,7 @@ function EditUserForm(props){
   const [bodytype , setBodyType] = useState(userData.body_type)  
   const [profession, setProfession] = useState(userData.profession)  
   const [cityState, setCityState] = useState(userData.city_state)
+  const [photo, setPhoto] = useState(userData.photo) 
 
   const options = [
     { key: 'm', text: 'Male', value: 'male' },
@@ -66,7 +67,8 @@ function EditUserForm(props){
       about_me: aboutMe,
       preference: preference,
       body_type:bodytype, 
-      profession: profession 
+      profession: profession,
+      photo: photo
 
     }
     dispatch(actionCreator.editUserProfile(updateInfo, localStorage.token, localStorage.loggedInUserId))
@@ -79,6 +81,9 @@ console.log(lastName)
       case 'First Name':
         setFirstName(evt.target.value)
         break;
+      case 'photo':
+        setPhoto(evt.target.value)
+      break;
       case 'Last Name':
         setLastName(evt.target.value)
         break;
@@ -121,8 +126,8 @@ console.log(lastName)
 return(
 <>
   
-{ }
-<Header as="h1">Edit</Header>
+{ !userData.photo && !userData.about_me ? <Header as='h1'>Finish Profile Setup</Header> : <Header as="h1">Edit</Header> }
+
 <Form onSubmit={editFormSubmit} >
 <Form.Group widths='equal'>
 <Form.Input
@@ -144,7 +149,7 @@ return(
             </Form.Group>
   <Form.Input  label='Username' name='username' placeholder={userData.username}   onChange={FormInput} />
   <Form.Input  label='Email' onChange={FormInput}  name='email' placeholder={userData.email} />
-  {/* <Form.Input  label='Photo'  /> */}
+  <Form.Input  label='Photo' name='photo' onChange={FormInput}  />
   <Form.Input  label='Age' name='age' placeholder={userData.age} onChange={FormInput} />
   <Form.Input  label='Dob' name='dob' placeholder={userData.dob} onChange={FormInput} />
   <Form.Input  label='City,State' name='citystate' placeholder={userData.city_state} onChange={FormInput} />
