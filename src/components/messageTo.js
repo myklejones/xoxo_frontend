@@ -21,6 +21,7 @@ function MessageTo({}){
         dispatch(actionCreator.getUser(localStorage.token, localStorage.loggedInUserId))
 
         setTog(!tog)
+        setTog(!tog)
     }
     const messageInput = evt =>{
         switch(evt.target.name){

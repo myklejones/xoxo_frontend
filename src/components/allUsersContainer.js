@@ -6,7 +6,7 @@ import {Form, TextArea, Header, Card, Grid, Image,Container, Button} from 'seman
 
 function AllUsersContainer(props){
    
-    const {allUsers, interactingUser, userData, oneUser} = useSelector(state => state)
+    const {allUsers, interactingUser, userData, oneUser, userConversations} = useSelector(state => state)
    
     const dispatch = useDispatch()
     
@@ -20,7 +20,13 @@ function AllUsersContainer(props){
             let selectedUserId =  parseInt(evt.target.parentElement.id)
             const filteredUser = allUsers.find((idNum)=>{return(idNum.id === selectedUserId)})
             dispatch(actionCreator.interactingUser(filteredUser))
-            debugger
+           userConversations.map(c=>{
+               if(c.attributes.sender_id === selectedUserId || c.attributes.recipient_id === selectedUserId){
+                dispatch(actionCreator.interactingConvo(c))
+               }else{
+                dispatch(actionCreator.interactingConvo({}))
+               }
+           })
             props.history.push(`users/${filteredUser.username}`)
         }
         

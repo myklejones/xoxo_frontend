@@ -215,6 +215,9 @@ export const sendMessage = (message, token,sender_id, reciever_id)=>dispatch=>{
         }).then(res => res.json())
         .then(res =>{
             console.log(res)
+            dispatch(gotConversations(res.conversation.data))
+            dispatch(sendMessageLoading(false)) 
+           
         })
     }
     
