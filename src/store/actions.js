@@ -174,7 +174,7 @@ export const newUser = (userinfo) => dispatch => {
 }
 export const sendMessageLoading = (bool) =>{
     return{
-        type:"SEND_MESSAGE_LOADING" , payload: bool
+        type:"SET_MESSAGE_LOADING" , payload: bool
     }
 }
 export const sendMessageLoaded = (data) =>{

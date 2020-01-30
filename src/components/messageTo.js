@@ -10,7 +10,8 @@ function MessageTo({}){
     const [messageId, setMessageId] = useState(null)
     const [tog, setTog] = useState(false)
     const dispatch = useDispatch()
-    useEffect(()=>{ dispatch(actionCreator.getUser(localStorage.token, localStorage.loggedInUserId))},[tog])
+    useEffect(()=>{console.log("update") },[messageLoading])
+    console.log(messageLoading)
 
     const messageFormsubmit = evt => {
         evt.preventDefault()

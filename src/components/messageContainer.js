@@ -11,12 +11,17 @@ function MessageContainer(props){
     const {userData,userMessages, userConversations, allUsers, interactingUser}= useSelector(state => state)
     const [searchinput, setSearchinput] = useState("")
     const [right, setRight] = useState(false)
+    const [revConvo,setRevConvo] = useState(false)
     const dispatch = useDispatch()
     const c = ()=>{
         dispatch(actionCreator.convos(localStorage.token))
     }
 
-    useEffect(()=>{dispatch(actionCreator.convos(localStorage.token))},[searchinput])
+    useEffect(()=>{
+    //      for(let i = 0; i<userConversations.length; i++){
+    //     userConversations[i].attributes.messages.reverse()
+    // }
+dispatch(actionCreator.convos(localStorage.token))},[])
 
     const imageClicked =(evt)=>{
  
@@ -42,15 +47,10 @@ function MessageContainer(props){
         setSearchinput(evt.target.value)
       
     }
-    const dubClickConvo =(evt)=>{
-    }
+ 
 
-
-   for(let i = 0; i<userConversations.length; i++){
-            userConversations[i].attributes.messages.reverse()
-    }
-    const sortedConvos = userConversations.sort((a,b)=>{if(a.attributes.messages.length >= 1){
-        return a.attributes.messages[0].created_at -  b.attributes.messages[0].created_at }})
+  
+  
     const rightClick =(evt)=>{
         evt.preventDefault()
         let selectedId = parseInt(evt.target.id)
@@ -63,6 +63,16 @@ function MessageContainer(props){
         debugger
         console.log("rightClicked")
     }
+    const convoRightClicked = (evt)=>{
+        switch(evt.target.name){
+            case('yes'):
+            console.log('yes')
+            break;
+            case('no'):
+            setRight(false)
+            break;
+        }
+    }
 
    
     return( 
@@ -72,30 +82,37 @@ function MessageContainer(props){
     icon='search'
     iconPosition='left'
     placeholder='Search...'
-  />
+    />
 
       <List>
-       {sortedConvos.map(c=>{
+       {userConversations.sort((a,b)=>{
+        return Date.parse(b.attributes.messages[0].created_at) - Date.parse(a.attributes.messages[0].created_at)  })
+        .map(c=>{
            if(c.attributes.sender_id  === userData.id){
                let a_user = allUsers.find(u=>{return u.id === c.attributes.recipient_id })
+               let lastNum = null
+               if(c.attributes.messages[0]){
+                   lastNum = c.attributes.messages.length -1 
+               }
                if(searchinput.length===0 ){
                  return(
-                <List.Item id={a_user.id} onDoubleClick={dubClickConvo} >
+                <List.Item id={a_user.id}  >
                          <Image id={a_user.id} onClick={imageClicked} size='mini' circular src={a_user.photo} /> 
                         <List.Content id={c.id} onContextMenu={rightClick} onClick={messageClicked} >
                             <List.Header id={a_user.id}>{a_user.username}</List.Header>
-                            <List.Description id={a_user.id} >{c.attributes.messages[0] ? c.attributes.messages[0].body : null}  </List.Description>    
+                            <List.Description id={a_user.id} >{c.attributes.messages[lastNum] ? c.attributes.messages[lastNum].body : null}  </List.Description>    
                         </List.Content>
-                        {right&& a_user.id === interactingUser.id ? <Header>Delete this conversation ?<Button>Yes</Button><Button>No</Button></Header> : null}
+                        {right&& a_user.id === interactingUser.id ? <Header>Delete this conversation ?<Button onClick={convoRightClicked} name='yes' >Yes</Button><Button onClick={convoRightClicked} name='no' >No</Button></Header> : null}
                     </List.Item>
                 ) 
                }else if(a_user.username.toUpperCase().startsWith(searchinput.toUpperCase()) ){
+
                 return(
-                    <List.Item id={a_user.id} onDoubleClick={dubClickConvo} >
+                    <List.Item id={a_user.id}  >
                     <Image id={a_user.id} onClick={imageClicked} size='mini' circular src={a_user.photo} /> 
                    <List.Content id={c.id} onContextMenu={rightClick} onClick={messageClicked} >
                        <List.Header id={a_user.id}>{a_user.username}</List.Header>
-                       <List.Description id={a_user.id} >{c.attributes.messages[0] ? c.attributes.messages[0].body : null}  </List.Description>    
+                       <List.Description id={a_user.id} >{c.attributes.messages[lastNum] ? c.attributes.messages[lastNum].body : null}  </List.Description>    
                    </List.Content>
                    {right&& a_user.id === interactingUser.id ? <Header>Delete this conversation ?<Button>Yes</Button><Button>No</Button></Header> : null}
                </List.Item>
@@ -104,24 +121,28 @@ function MessageContainer(props){
                
            }else if(c.attributes.recipient_id  === userData.id){
                   let a_user = allUsers.find(u=>{return u.id === c.attributes.sender_id })
+                  let lastNum = null
+               if(c.attributes.messages[0]){
+                   lastNum = c.attributes.messages.length -1 
+               }
                   if(searchinput.length === 0){
                     return(
-                    <List.Item id={a_user.id} onDoubleClick={dubClickConvo} >
+                    <List.Item id={a_user.id}  >
                     <Image id={a_user.id} onClick={imageClicked} size='mini' circular src={a_user.photo} /> 
                    <List.Content id={c.id} onContextMenu={rightClick} onClick={messageClicked} >
                        <List.Header id={a_user.id}>{a_user.username}</List.Header>
-                       <List.Description id={a_user.id} >{c.attributes.messages[0] ? c.attributes.messages[0].body : null}   </List.Description>    
+                       <List.Description id={a_user.id} >{c.attributes.messages[lastNum] ? c.attributes.messages[lastNum].body : null}   </List.Description>    
                        {right&& a_user.id === interactingUser.id ? <Header>Delete this conversation ?<Button>Yes</Button><Button>No</Button></Header> : null}
                    </List.Content>
                   
                </List.Item>)  
                   }else if(a_user.username.toUpperCase().startsWith(searchinput.toUpperCase())){
                     return(
-                        <List.Item id={a_user.id} onDoubleClick={dubClickConvo} >
+                        <List.Item id={a_user.id}  >
                         <Image id={a_user.id} onClick={imageClicked} size='mini' circular src={a_user.photo} /> 
                        <List.Content id={c.id} onContextMenu={rightClick} onClick={messageClicked} >
                            <List.Header id={a_user.id}>{a_user.username}</List.Header>
-                           <List.Description id={a_user.id} >{c.attributes.messages[0] ? c.attributes.messages[0].body : null}   </List.Description>  
+                           <List.Description id={a_user.id} >{c.attributes.messages[0] ? c.attributes.messages[lastNum].body : null}   </List.Description>  
                            {right&& a_user.id === interactingUser.id ? <Header>Delete this conversation ?<Button>Yes</Button><Button>No</Button></Header> : null}  
                        </List.Content>
                      
