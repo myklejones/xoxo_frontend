@@ -298,3 +298,16 @@ export const deleteMessage = (messageId,token) => dispatch =>{
 export const interactingConvo = (data)=>dispatch=>{
     dispatch(setInteractingConversation(data))
 }
+export const deleteConversation = (convoId, token) =>dispatch =>{
+    fetch(`http://localhost:3000/conversations/${convoId}`,{
+        headers:{
+            Accepts: 'application/json',
+            'Content-type' : 'application/json',
+            "Authorization": token
+        },
+        method: "DELETE"
+    }).then(r => r.json())
+    .then(res =>{
+        console.log(res)
+    })
+}

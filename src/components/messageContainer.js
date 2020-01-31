@@ -8,7 +8,7 @@ import * as actionCreator from '../store/actions'
 function MessageContainer(props){
     
     
-    const {userData,userMessages, userConversations, allUsers, interactingUser}= useSelector(state => state)
+    const {userData,userMessages, userConversations, allUsers, interactingUser, interactingConvo}= useSelector(state => state)
     const [searchinput, setSearchinput] = useState("")
     const [right, setRight] = useState(false)
     const [revConvo,setRevConvo] = useState(false)
@@ -56,17 +56,20 @@ dispatch(actionCreator.convos(localStorage.token))},[])
         let selectedId = parseInt(evt.target.id)
         const userToBeSet = allUsers.find(u => u.id === selectedId)
         dispatch(actionCreator.interactingUser(userToBeSet))
+       
         let selectedConvoId = parseInt(evt.target.parentElement.id)
         const convoToBeSet = userConversations.find(c => parseInt(c.id) === selectedConvoId )
         dispatch(actionCreator.interactingConvo(convoToBeSet))
+
         setRight(!right)
-        debugger
-        console.log("rightClicked")
+
+    
     }
     const convoRightClicked = (evt)=>{
         switch(evt.target.name){
             case('yes'):
             console.log('yes')
+            dispatch(actionCreator.deleteConversation(interactingConvo.id, localStorage.token))
             break;
             case('no'):
             setRight(false)
@@ -114,7 +117,7 @@ dispatch(actionCreator.convos(localStorage.token))},[])
                        <List.Header id={a_user.id}>{a_user.username}</List.Header>
                        <List.Description id={a_user.id} >{c.attributes.messages[lastNum] ? c.attributes.messages[lastNum].body : null}  </List.Description>    
                    </List.Content>
-                   {right&& a_user.id === interactingUser.id ? <Header>Delete this conversation ?<Button>Yes</Button><Button>No</Button></Header> : null}
+                   {right&& a_user.id === interactingUser.id ? <Header>Delete this conversation ?<Button onClick={convoRightClicked} name='yes' >Yes</Button><Button onClick={convoRightClicked} name='no' >No</Button></Header>  : null}
                </List.Item>
                 )
                 }  
@@ -132,7 +135,7 @@ dispatch(actionCreator.convos(localStorage.token))},[])
                    <List.Content id={c.id} onContextMenu={rightClick} onClick={messageClicked} >
                        <List.Header id={a_user.id}>{a_user.username}</List.Header>
                        <List.Description id={a_user.id} >{c.attributes.messages[lastNum] ? c.attributes.messages[lastNum].body : null}   </List.Description>    
-                       {right&& a_user.id === interactingUser.id ? <Header>Delete this conversation ?<Button>Yes</Button><Button>No</Button></Header> : null}
+                       {right&& a_user.id === interactingUser.id ? <Header>Delete this conversation ?<Button onClick={convoRightClicked} name='yes' >Yes</Button><Button onClick={convoRightClicked} name='no' >No</Button></Header>  : null}
                    </List.Content>
                   
                </List.Item>)  
@@ -143,7 +146,7 @@ dispatch(actionCreator.convos(localStorage.token))},[])
                        <List.Content id={c.id} onContextMenu={rightClick} onClick={messageClicked} >
                            <List.Header id={a_user.id}>{a_user.username}</List.Header>
                            <List.Description id={a_user.id} >{c.attributes.messages[0] ? c.attributes.messages[lastNum].body : null}   </List.Description>  
-                           {right&& a_user.id === interactingUser.id ? <Header>Delete this conversation ?<Button>Yes</Button><Button>No</Button></Header> : null}  
+                           {right&& a_user.id === interactingUser.id ? <Header>Delete this conversation ?<Button onClick={convoRightClicked} name='yes' >Yes</Button><Button onClick={convoRightClicked} name='no' >No</Button></Header>  : null}  
                        </List.Content>
                      
                    </List.Item>) 
