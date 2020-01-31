@@ -215,7 +215,9 @@ export const sendMessage = (message, token,sender_id, reciever_id)=>dispatch=>{
         }).then(res => res.json())
         .then(res =>{
             console.log(res)
+            dispatch(gotUser(res.user.data.attributes))
             dispatch(gotConversations(res.conversation.data))
+            dispatch(setInteractingConversation(res.activeConvo.data))
             dispatch(sendMessageLoading(false)) 
            
         })
@@ -288,6 +290,7 @@ export const deleteMessage = (messageId,token) => dispatch =>{
     }).then(r => r.json())
     .then(res => {
         console.log(res)
+        dispatch(setInteractingConversation(res.activeConvo.data))
     })
     
 }
