@@ -9,16 +9,19 @@ import {createStore, applyMiddleware} from 'redux'
 import reducer from './store/reducers/reducer'
 import thunk from 'redux-thunk'
 import "semantic-ui-css/semantic.min.css"
+import {ActionCableProvider} from 'react-actioncable-provider'
+
 const store = createStore(reducer, applyMiddleware(thunk))
 
 ReactDOM.render(
     <div id='bg' >
-     <Provider store={store}>
-        <BrowserRouter>
-            <App />
-        </BrowserRouter>   
-    </Provider>
-    
+        <ActionCableProvider url='ws://localhost:3000/cable' >
+            <Provider store={store}>
+                <BrowserRouter>
+                    <App />
+                </BrowserRouter>   
+            </Provider> 
+        </ActionCableProvider>    
     </div>
    
 , document.getElementById('root'));

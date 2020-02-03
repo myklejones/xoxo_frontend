@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 import * as actionCreator from '../store/actions'
+import {ActionCableConsumer} from 'react-actioncable-provider'
 import {Image, Form, Button, Icon,Comment, Header, Modal, Sticky, List, Label} from 'semantic-ui-react'
 
 function MessageTo({}){
@@ -10,8 +11,8 @@ function MessageTo({}){
     const [messageId, setMessageId] = useState(null)
     const [tog, setTog] = useState(false)
     const dispatch = useDispatch()
-    useEffect(()=>{console.log("update") },[messageLoading])
-    console.log(messageLoading)
+    useEffect(()=>{console.log("messageTo component update") },[messageLoading])
+   
 
     const messageFormsubmit = evt => {
         evt.preventDefault()
@@ -56,11 +57,7 @@ function MessageTo({}){
     const doubleClickOptions =()=>{
         return(
             <>
-            <Label onClick={editMessageClicked} >
-
-                <Icon circular name='edit' />
-                Edit
-            </Label>
+           
             <Label onClick={DeletemessageClicked} >
                 <Icon circular name='trash' />
                 Delete
@@ -103,11 +100,19 @@ return(
         }): null}  
     </List>
     <Sticky>
-        <Form id={interactingUser.id} onSubmit={messageFormsubmit} >
-            <Form.TextArea name ='messageTyped' value={message} onChange={messageInput} />
-            <Button type='submit' content='Send' labelPosition='left' icon='edit' primary />
+        <Form id={interactingUser.id} onSubmit={messageFormsubmit}  >
+            <Form.TextArea id={interactingUser.id} name ='messageTyped' value={message} onChange={messageInput} />
+            <Button id={interactingUser.id} type='submit' content='Send' labelPosition='left' icon='edit' primary />
         </Form>   
     </Sticky>  
+
+    <ActionCableConsumer
+           channel={{channel: 'ConversationChannel'}}
+           onReceived={convo =>{
+               console.log(convo, "convo")
+               dispatch(actionCreator.convoCable(convo))
+           }} 
+           />   
     </>
 )
 }

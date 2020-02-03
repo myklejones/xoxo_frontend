@@ -128,9 +128,7 @@ fetch(`http://localhost:3000/users/${id}`,{
     })
     .then(res => res.json())
     .then(data =>{
-        console.log(data)
-        if( data.errors ){
-            console.log(data)
+        if( data.errors ){  
          dispatch(errorUpdatingUser(data))   
         }else{
             dispatch(gotUser(data.user))
@@ -215,6 +213,7 @@ export const sendMessage = (message, token,sender_id, reciever_id)=>dispatch=>{
         }).then(res => res.json())
         .then(res =>{
             console.log(res)
+         
             dispatch(gotUser(res.user.data.attributes))
             dispatch(gotConversations(res.conversation.data))
             dispatch(setInteractingConversation(res.activeConvo.data))
@@ -291,6 +290,7 @@ export const deleteMessage = (messageId,token) => dispatch =>{
     .then(res => {
         console.log(res)
         dispatch(setInteractingConversation(res.activeConvo.data))
+        dispatch(gotConversations(res.conversations.data))
     })
     
 }
@@ -308,6 +308,12 @@ export const deleteConversation = (convoId, token) =>dispatch =>{
         method: "DELETE"
     }).then(r => r.json())
     .then(res =>{
-        console.log(res)
+       
+        dispatch(gotConversations(res.conversation.data))
     })
+}
+
+export const convoCable=(res)=>dispatch=>{
+    // dispatch(setInteractingConversation(res.activeConvo.data))
+   
 }

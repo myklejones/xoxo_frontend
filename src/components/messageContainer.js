@@ -5,6 +5,7 @@ import * as actionCreator from '../store/actions'
 
 
 
+
 function MessageContainer(props){
     
     
@@ -17,11 +18,8 @@ function MessageContainer(props){
         dispatch(actionCreator.convos(localStorage.token))
     }
 
-    useEffect(()=>{
-    //      for(let i = 0; i<userConversations.length; i++){
-    //     userConversations[i].attributes.messages.reverse()
-    // }
-dispatch(actionCreator.convos(localStorage.token))},[])
+//     useEffect(()=>{
+// dispatch(actionCreator.convos(localStorage.token))},[])
 
     const imageClicked =(evt)=>{
  
@@ -33,7 +31,7 @@ dispatch(actionCreator.convos(localStorage.token))},[])
     }
 
     const messageClicked = evt =>{
-        
+       
         let selectedId = parseInt(evt.target.id)
         const userToBeSet = allUsers.find(u => u.id === selectedId)
         dispatch(actionCreator.interactingUser(userToBeSet))
@@ -88,8 +86,7 @@ dispatch(actionCreator.convos(localStorage.token))},[])
     />
 
       <List>
-       {userConversations.sort((a,b)=>{
-        return Date.parse(b.attributes.messages[0].created_at) - Date.parse(a.attributes.messages[0].created_at)  })
+       {userConversations
         .map(c=>{
            if(c.attributes.sender_id  === userData.id){
                let a_user = allUsers.find(u=>{return u.id === c.attributes.recipient_id })
@@ -101,9 +98,12 @@ dispatch(actionCreator.convos(localStorage.token))},[])
                  return(
                 <List.Item id={a_user.id}  >
                          <Image id={a_user.id} onClick={imageClicked} size='mini' circular src={a_user.photo} /> 
-                        <List.Content id={c.id} onContextMenu={rightClick} onClick={messageClicked} >
-                            <List.Header id={a_user.id}>{a_user.username}</List.Header>
-                            <List.Description id={a_user.id} >{c.attributes.messages[lastNum] ? c.attributes.messages[lastNum].body : null}  </List.Description>    
+                        <List.Content id={c.id} onContextMenu={rightClick}  >
+                            <List.Header onClick={messageClicked} id={a_user.id}>
+                                {a_user.username}
+                            </List.Header>
+                            <List.Description id={a_user.id} onClick={messageClicked} > 
+                            {c.attributes.messages[lastNum] ? c.attributes.messages[lastNum].body : null}  </List.Description>    
                         </List.Content>
                         {right&& a_user.id === interactingUser.id ? <Header>Delete this conversation ?<Button onClick={convoRightClicked} name='yes' >Yes</Button><Button onClick={convoRightClicked} name='no' >No</Button></Header> : null}
                     </List.Item>
@@ -113,9 +113,11 @@ dispatch(actionCreator.convos(localStorage.token))},[])
                 return(
                     <List.Item id={a_user.id}  >
                     <Image id={a_user.id} onClick={imageClicked} size='mini' circular src={a_user.photo} /> 
-                   <List.Content id={c.id} onContextMenu={rightClick} onClick={messageClicked} >
-                       <List.Header id={a_user.id}>{a_user.username}</List.Header>
-                       <List.Description id={a_user.id} >{c.attributes.messages[lastNum] ? c.attributes.messages[lastNum].body : null}  </List.Description>    
+                   <List.Content id={c.id} onContextMenu={rightClick}  >
+                       <List.Header onClick={messageClicked} id={a_user.id}>{a_user.username}</List.Header>
+                       <List.Description id={a_user.id} onClick={messageClicked} >
+                           {c.attributes.messages[lastNum] ? c.attributes.messages[lastNum].body : null} 
+                            </List.Description>    
                    </List.Content>
                    {right&& a_user.id === interactingUser.id ? <Header>Delete this conversation ?<Button onClick={convoRightClicked} name='yes' >Yes</Button><Button onClick={convoRightClicked} name='no' >No</Button></Header>  : null}
                </List.Item>
@@ -131,40 +133,48 @@ dispatch(actionCreator.convos(localStorage.token))},[])
                   if(searchinput.length === 0){
                     return(
                     <List.Item id={a_user.id}  >
-                    <Image id={a_user.id} onClick={imageClicked} size='mini' circular src={a_user.photo} /> 
-                   <List.Content id={c.id} onContextMenu={rightClick} onClick={messageClicked} >
-                       <List.Header id={a_user.id}>{a_user.username}</List.Header>
-                       <List.Description id={a_user.id} >{c.attributes.messages[lastNum] ? c.attributes.messages[lastNum].body : null}   </List.Description>    
+                    <Image
+                     id={a_user.id}
+                      onClick={imageClicked} 
+                      size='mini' 
+                      circular 
+                      src={a_user.photo} 
+                      /> 
+                   <List.Content 
+                   id={c.id}
+                    onContextMenu={rightClick} >
+                       <List.Header onClick={messageClicked} id={a_user.id}>{
+                       a_user.username}
+                       </List.Header>
+                       <List.Description 
+                       id={a_user.id} 
+                       onClick={messageClicked}
+                       >
+                           {c.attributes.messages[lastNum] ? c.attributes.messages[lastNum].body : null}  
+                            </List.Description>    
                        {right&& a_user.id === interactingUser.id ? <Header>Delete this conversation ?<Button onClick={convoRightClicked} name='yes' >Yes</Button><Button onClick={convoRightClicked} name='no' >No</Button></Header>  : null}
-                   </List.Content>
-                  
+                   </List.Content>              
                </List.Item>)  
                   }else if(a_user.username.toUpperCase().startsWith(searchinput.toUpperCase())){
                     return(
                         <List.Item id={a_user.id}  >
                         <Image id={a_user.id} onClick={imageClicked} size='mini' circular src={a_user.photo} /> 
-                       <List.Content id={c.id} onContextMenu={rightClick} onClick={messageClicked} >
-                           <List.Header id={a_user.id}>{a_user.username}</List.Header>
-                           <List.Description id={a_user.id} >{c.attributes.messages[0] ? c.attributes.messages[lastNum].body : null}   </List.Description>  
+                       <List.Content id={c.id} onContextMenu={rightClick}>
+                           <List.Header onClick={messageClicked} 
+                           id={a_user.id}>{a_user.username}
+                           </List.Header>
+                           <List.Description 
+                           onClick={messageClicked}
+                           id={a_user.id} >
+                               {c.attributes.messages[0] ? c.attributes.messages[lastNum].body : null}  
+                                </List.Description>  
                            {right&& a_user.id === interactingUser.id ? <Header>Delete this conversation ?<Button onClick={convoRightClicked} name='yes' >Yes</Button><Button onClick={convoRightClicked} name='no' >No</Button></Header>  : null}  
                        </List.Content>
-                     
                    </List.Item>) 
                   }
-                
-           }
-          
-
-       })}
-        
+           }          
+       })}       
       </List>
-           
-     
-    
-               
-
-       
-        
         </>
     )
 } 

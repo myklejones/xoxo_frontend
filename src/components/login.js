@@ -24,16 +24,12 @@ function Login(props) {
               props.history.push('/signUp')
             }
             
-            const loginSubmit = async (evt) =>{
-              evt.preventDefault() 
-              console.log("login clicked")
-              
-              dispatch(actionCreator.gotToken( ausername, password))  
-                
-            }
-            // const lo = props.match.path = `/${user.username}`
-            // console.log(lo)
-
+    const loginSubmit = (evt) =>{
+      evt.preventDefault() 
+      console.log("login clicked")       
+      dispatch(actionCreator.gotToken( ausername, password))        
+    }
+  
     const getUser = (token,id) =>{
         dispatch(actionCreator.getUser(token, id)) 
     }
@@ -41,9 +37,7 @@ function Login(props) {
     const pushUser = () =>{
         props.history.push(`/${userData.username}`)
     }
-    console.log(uLoading)
-    
-    
+  
 
     if(localStorage.token && !tog){
       setTog(true)

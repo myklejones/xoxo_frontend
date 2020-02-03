@@ -23,15 +23,14 @@ function App(props) {
   const myState = useSelector(state => state)
   const dispatch = useDispatch()
   const [activeItemSel, setActiveItemSel] = useState("home")
-  // useEffect(()=>{dispatch(actionCreator.getUser(localStorage.token, localStorage.loggedInUserId))},[messageLoading])
+  
   const gotToken = () =>{
     localStorage.token = token
     localStorage.loggedInUserId = id 
   }
 console.log(myState)
   const handleClick = (evt, {name})=>{
-    
-    
+  
     if(name === "logout"){
       setActiveItemSel("home")
       localStorage.clear()
