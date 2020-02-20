@@ -6,7 +6,7 @@ import UserForm from './components/userForm'
 import {useSelector, useDispatch} from 'react-redux'
 import UserContainer from './components/userContainer'
 import AllUserContainer from './components/allUsersContainer.js'
-import { Menu, Header, Image} from 'semantic-ui-react'
+import { Dropdown ,Menu, Header, Image, List} from 'semantic-ui-react'
 import MessageContainer from './components/MessageContainer'
 import Message from './components/messageTo'
 import AUser from './components/ASinlgleUser'
@@ -23,6 +23,7 @@ function App(props) {
   const myState = useSelector(state => state)
   const dispatch = useDispatch()
   const [activeItemSel, setActiveItemSel] = useState("home")
+  const [deleteProfile, setDeleteProfile] = useState(false)
   
   const gotToken = () =>{
     localStorage.token = token
@@ -44,15 +45,20 @@ console.log(myState)
      
   }
   
+  const profileHeaderClicked = (evt) =>{
+    console.log('image was clicke')
+    setDeleteProfile(!deleteProfile)
+  }
  
   const header = () =>{
    
     return (<>
    
-     <Menu color='blue'  >
-      <Header as='h3'>
-        <Image circular src={userData.photo} /> 
+     <Menu color='blue' attached='top' >
+     <Header onClick={profileHeaderClicked} as='h3'>
+        <Image  circular src={userData.photo} /> 
       </Header>
+     
         <Menu.Item
 
           name='home'
@@ -61,6 +67,7 @@ console.log(myState)
           icon='home'
           as={Link}
           to={`/${userData.username}`}
+
           
         />
         <Menu.Item
@@ -91,6 +98,7 @@ console.log(myState)
           to={`/login`}
         />
       </Menu> 
+   
       
     </>
     )}

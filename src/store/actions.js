@@ -187,6 +187,7 @@ export const sendMessageError = (data) =>{
         type:"SEND_MESSAGE_ERROR" , payload: data
     }
 }
+
 export const sendMessage = (message, token,sender_id, reciever_id)=>dispatch=>{
     console.log(message, token,sender_id, reciever_id)
         dispatch(sendMessageLoading(true))
