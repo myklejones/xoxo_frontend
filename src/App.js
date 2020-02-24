@@ -58,6 +58,9 @@ console.log(myState)
      <Header onClick={profileHeaderClicked} as='h3'>
         <Image  circular src={userData.photo} /> 
       </Header>
+      <Dropdown>
+        
+      </Dropdown>
      
         <Menu.Item
 
