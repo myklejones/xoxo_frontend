@@ -59,6 +59,9 @@ console.log(myState)
         <Image  circular src={userData.photo} /> 
       </Header>
       <Dropdown>
+        <Dropdown.Menu>
+          
+        </Dropdown.Menu>
         
       </Dropdown>
      
