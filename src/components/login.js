@@ -15,7 +15,6 @@ function Login(props) {
     tLoaded,
     tError,
     uLoaded,
-    uLoading,
   } = useSelector((state) => state);
 
   const userInput = (evt) => {
@@ -58,7 +57,7 @@ function Login(props) {
   }
   useEffect(() => {}, []);
 
-  console.log(token, id,ausername, password);
+  console.log(token, id, ausername, password);
   return (
     <>
       <div class="ui inverted segment blue">

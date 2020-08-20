@@ -4,7 +4,7 @@ import { Image, Header, Container, Button } from "semantic-ui-react";
 import * as actionCreator from "../store/actions";
 
 function AUser(props) {
-  const { allUsers, interactingUser, userData, oneUser } = useSelector(
+  const {interactingUser, userData } = useSelector(
     (state) => state
   );
   const dispatch = useDispatch();

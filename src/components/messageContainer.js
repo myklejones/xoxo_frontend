@@ -1,18 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  Button,
-  Input,
-  Image,
-  Header,
-  List,
-} from "semantic-ui-react";
+import { Button, Input, Image, Header, List } from "semantic-ui-react";
 import * as actionCreator from "../store/actions";
 
 function MessageContainer(props) {
   const {
     userData,
-    userMessages,
     userConversations,
     allUsers,
     interactingUser,
@@ -20,14 +13,11 @@ function MessageContainer(props) {
   } = useSelector((state) => state);
   const [searchinput, setSearchinput] = useState("");
   const [right, setRight] = useState(false);
-  const [revConvo, setRevConvo] = useState(false);
   const dispatch = useDispatch();
   const c = () => {
     dispatch(actionCreator.convos(localStorage.token));
   };
 
-  //     useEffect(()=>{
-  // dispatch(actionCreator.convos(localStorage.token))},[])
 
   const imageClicked = (evt) => {
     let selectedId = parseInt(evt.target.id);

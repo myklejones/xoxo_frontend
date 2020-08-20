@@ -52,12 +52,12 @@ function App(props) {
     return (
       <>
         <Menu color="blue" attached="top">
-          <Header onClick={profileHeaderClicked} as="h3">
-            <Image circular src={userData.photo} />
+          <Header onClick={profileHeaderClicked} as="h1" color="red" >
+           XoXo
           </Header>
-          <Dropdown>
+          {/* <Dropdown>
             <Dropdown.Menu></Dropdown.Menu>
-          </Dropdown>
+          </Dropdown> */}
 
           <Menu.Item
             name="home"
