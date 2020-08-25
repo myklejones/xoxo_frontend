@@ -13,6 +13,7 @@ function UserForm(props) {
   const [email, setEmail] = useState("");
   const [lastName, setLastName] = useState("");
   const [firstName, setFirstName] = useState("");
+  
   const formInput = (evt) => {
     console.log(evt.target.name);
     switch (evt.target.name) {
