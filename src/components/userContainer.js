@@ -7,9 +7,12 @@ import AllUsersContainer from "./allUsersContainer.js";
 import { Button } from "semantic-ui-react";
 
 function UserContainer(props) {
-  const { userData, uLoaded } = useSelector(
+
+
+  const { userData, uLoaded, allUsers } = useSelector(
     (state) => state
   );
+  const dispatch = useDispatch();
   const [profile, setProfile] = useState(false);
   const [viewUsers, setViewUsers] = useState(false);
 
@@ -22,19 +25,27 @@ function UserContainer(props) {
     outlog();
   }
 
-  const editClicked = () => {
-    props.history.push(`/edit/${userData.username}`);
-  };
+ 
   const viewProfileClicked = () => {
     setProfile(!profile);
   };
+
+  const viewProfile = () =>{
+    const filteredUser = allUsers.find((idNum) => {
+      return idNum.id === userData.id;
+    });
+    dispatch(actionCreator.interactingUser(filteredUser));
+
+    props.history.push("/profile")
+  }
  
+
 
   return (
     <>
       <User viewSelf={viewProfileClicked} props={props} showAll={profile} />
-      <Button color="blue" onClick={editClicked}>
-        Edit Profile
+      <Button color="blue" onClick={viewProfile}>
+        View Profile
       </Button>
     </>
   );

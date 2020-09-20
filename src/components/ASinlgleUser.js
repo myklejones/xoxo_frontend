@@ -23,6 +23,11 @@ function AUser(props) {
   const closeView =()=>{
     props.history.push(`/${userData.username}`);
   };
+
+  const editClicked = () => {
+    props.history.push(`/edit/${userData.username}`);
+  };
+
   return (
     <>
     {interactingUser.id === userData.id ? <Image src={interactingUser.photo} size="medium" attached="top" onClick={closeView} /> : <Image src={interactingUser.photo} size="medium" attached="top"  />}
@@ -34,13 +39,17 @@ function AUser(props) {
         {interactingUser.city_state}
         <Header as="h3">Occupation</Header>
         {interactingUser.profession}
-        <Header as="h3">About me</Header>
-        {interactingUser.about_me}
         <Header as="h3">Interested in</Header>
         {interactingUser.interest}
-        <Header as="h3">Body Type</Header>
-        {interactingUser.body_type}
+        <Header as="h3">About me</Header>
+        {interactingUser.about_me}
+        {/* <Header as="h3">Body Type</Header>
+        {interactingUser.body_type} */}
       </Container>
+        { interactingUser.id === userData.id ? <Button color="blue" onClick={editClicked}>
+        Edit Profile
+      </Button> : null}
+      
       {interactingUser.id === userData.id ? null : (
         <Button.Group attached="bottom">
           <Button basic color="blue" onClick={messageUserclicked}>

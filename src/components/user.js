@@ -10,7 +10,7 @@ function User({ props }) {
   const error = useSelector((state) => state.errorUpdatingUser);
   console.log(props);
 
-  const editUserProfile = (evt) => {
+  const userProfile = (evt) => {
     dispatch(actionCreator.interactingUser(userData));
     props.history.push(`/profile`);
   };
@@ -18,17 +18,20 @@ function User({ props }) {
   if (!userData.photo && !userData.about_me) {
     props.history.push(`/edit/${userData.username}`);
   }
+
   return (
     <>
       <Image
         src={userData.photo}
         size="small"
         attached="top"
-        onClick={editUserProfile}
+        onClick={userProfile}
       />
       <Header as="h1" attached>
         {userData.username}, {userData.age}
       </Header>
+
+      
       {/* <Label>
         <Icon name='mail' />
             23

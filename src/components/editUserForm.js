@@ -1,7 +1,7 @@
 import React, { useState, useEffect, Fragment } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import * as actionCreator from "../store/actions";
-import { Form, Header, Button, FormInput } from "semantic-ui-react";
+import { Form, Header, Button, FormInput, Image } from "semantic-ui-react";
 
 function EditUserForm(props) {
   const { userData, uLoaded } = useSelector((state) => state);
@@ -77,51 +77,59 @@ function EditUserForm(props) {
     );
     props.history.push(`/${username}`);
   };
-  console.log(lastName);
-  const FormInput = (evt) => {
-    switch (evt.target.name) {
+
+  
+  const FormInput = (evt, { value, name }) => {
+    console.log(name, value);
+
+    switch (name) {
       case "First Name":
-        setFirstName(evt.target.value);
+        setFirstName(value);
         break;
       case "photo":
-        setPhoto(evt.target.value);
+        setPhoto(value);
         break;
       case "Last Name":
-        setLastName(evt.target.value);
+        setLastName(value);
         break;
       case "username":
-        setUserName(evt.target.value);
+        setUserName(value);
         break;
       case "email":
-        setEmail(evt.target.value);
+        setEmail(value);
         break;
       case "age":
-        setAge(evt.target.value);
+        setAge(value);
         break;
       case "dob":
-        setDob(evt.target.value);
-        break;
-      case "sex":
-        setSex(evt.target.value);
+        setDob(value);
         break;
       case "about_me":
-        setAboutme(evt.target.value);
-        break;
-      case "interest":
-        setInterest(evt.target.value);
-      case "preference":
-        setPreference(evt.target.value);
-        break;
-      case "body_type":
-        setBodyType(evt.target.value);
+        setAboutme(value);
         break;
       case "profession":
-        setProfession(evt.target.value);
+        setProfession(value);
         break;
       case "citystate":
-        setCityState(evt.target.value);
+        setCityState(value);
+        break;
+      case "sex":
+        setSex(value);
+        break;
+      case "interest":
+        setInterest(value);
+        break;
+      case "preference":
+        setPreference(value);
+        break;
+      case "body_type":
+        setBodyType(value);
         break;
     }
+  };
+
+  const ImageClicked = () =>{
+    props.history.push(`/${username}`);
   };
 
   return (
@@ -133,6 +141,12 @@ function EditUserForm(props) {
       )}
 
       <Form onSubmit={editFormSubmit}>
+      <Image
+        src={userData.photo}
+        size="small"
+        attached="top"
+        onClick={ImageClicked}
+      />
         <Form.Group widths="equal">
           <Form.Input
             fluid
@@ -159,9 +173,9 @@ function EditUserForm(props) {
         />
         <Form.Input
           label="Email"
-          onChange={FormInput}
           name="email"
           placeholder={userData.email}
+          onChange={FormInput}
         />
         <Form.Input label="Photo" name="photo" onChange={FormInput} />
         <Form.Input
@@ -185,10 +199,10 @@ function EditUserForm(props) {
         <Form.Select
           fluid
           label="Sex"
-          onChange={FormInput}
           name="sex"
           options={options1}
           placeholder={userData.sex}
+          onChange={FormInput}
         />
         <Form.Input
           label="About me"
@@ -209,7 +223,7 @@ function EditUserForm(props) {
           label="Preference"
           name="preference"
           options={options}
-          placeholder="Gender"
+          placeholder={userData.preference ? userData.preference : "preference"}
         />
         <Form.Select
           fluid
